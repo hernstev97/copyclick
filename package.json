@@ -11,7 +11,11 @@
     "cp_css": "cpx \"./src/css/style.css\" dist",
     "cp_assets": "cpx \"src/assets/**/*\" dist/assets",
 
-    "start": "rm -rf ./dist/ && npm-run-all --parallel build watch cp_html cp_html"
+    "watch_html": "cpx \"./src/index.html\" dist --watch",
+    "watch_css": "cpx \"./src/css/style.css\" dist --watch",
+    "watch_assets": "cpx \"src/assets/**/*\" dist/assets --watch",
+
+    "start": "rm -rf ./dist/ && npm-run-all --parallel build watch watch_html watch_css"
   },
   "repository": {
     "type": "git",

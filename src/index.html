@@ -1,8 +1,28 @@
 <!DOCTYPE html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
     <script type="module" src="index.js"></script>
 </head>
 <body>
-    <h1>hello world</h1>
+    <header>
+        <h1>copyclick.</h1>
+        <h3>Just paste it for later and copy with one click.</h3>
+    </header>
+    
+    <main>
+        <textarea type="text" name="pastearea" id="pastearea" oninput='this.style.height = "";this.style.height = this.scrollHeight + -36 + "px"'></textarea>
+        <div class="copy-area-control-button-wrapper">
+            <button>Clear</button>
+        </div>
+    </main>
+
+    <footer>
+        (c) Steven Hernandez
+    </footer>
 </body>
 </html>
