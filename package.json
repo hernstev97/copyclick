@@ -1,0 +1,32 @@
+{
+  "name": "copyclick",
+  "version": "1.0.0",
+  "description": "a tool to paste a text to and copy it with one click",
+  "main": "./dist/index.js",
+  "scripts": {
+    "watch": "five-server",
+    "build": "tsc -w",
+
+    "cp_html": "cpx \"./src/index.html\" dist",
+    "cp_css": "cpx \"./src/css/style.css\" dist",
+    "cp_assets": "cpx \"src/assets/**/*\" dist/assets",
+
+    "start": "rm -rf ./dist/ && npm-run-all --parallel build watch cp_html cp_html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hernstev97/copyclick.git"
+  },
+  "author": "Steven Hernandez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hernstev97/copyclick/issues"
+  },
+  "homepage": "https://github.com/hernstev97/copyclick#readme",
+  "devDependencies": {
+    "cpx": "^1.5.0",
+    "five-server": "^0.4.4",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.8.3"
+  }
+}
