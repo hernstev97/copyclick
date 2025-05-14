@@ -15,9 +15,15 @@
     </header>
     
     <main>
-        <textarea type="text" name="pastearea" id="pastearea" oninput='this.style.height = "";this.style.height = this.scrollHeight + "px"'></textarea>
+        <p class="copy-feedback">copied!</p>
+        <textarea type="text" placeholder="Paste text here..." name="pastearea" class="pastearea paste-enabled"></textarea>
+        <div class="pastearea copybox"></div>
         <div class="copy-area-control-button-wrapper">
-            <button>Clear</button>
+            <label for="editmode">
+                <input type="checkbox" name="editmode" id="editmode">
+                <span>Edit</span>
+            </label>
+            <button id="clear-pastearea">Clear</button>
         </div>
     </main>
 

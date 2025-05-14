@@ -59,7 +59,8 @@ main {
     gap: 1rem;
 }
 
-#pastearea {
+.pastearea {
+    display: none;
     appearance: none;
     background-color: #2A2B2A;
     border-radius: 10px;
@@ -76,15 +77,28 @@ main {
     transition: border-color .3s ease;
 }
 
-#pastearea:focus {
+.pastearea:focus {
     border-color: #996888;
+}
+
+.pastearea.paste-enabled, .pastearea.copy-enabled {
+    display: block;
+}
+
+.copybox {
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.copybox:hover {
+    border: 3px solid var(--violet);
 }
 
 .copy-area-control-button-wrapper {
     width: 100%;
     max-width: 666px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
 
 .copy-area-control-button-wrapper button {
@@ -101,4 +115,13 @@ main {
 .copy-area-control-button-wrapper button:hover {
     background-color: var(--eggplant);
     cursor: pointer
+}
+
+.copy-feedback {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.copy-feedback.copied {
+    opacity: 1;
 }
