@@ -41,7 +41,7 @@ html {
     font-size: 18px;
 }
 
-body {
+.site-wrapper {
     background-color: var(--night);
     display: flex;
     flex-direction: column;

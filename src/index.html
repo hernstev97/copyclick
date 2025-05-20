@@ -13,27 +13,29 @@
     <script type="module" src="index.js"></script>
 </head>
 <body>
-    <header>
-        <h1>copyclick.</h1>
-        <h3>Just paste it for later and copy with one click.</h3>
-    </header>
-    
-    <main>
-        <p class="copy-feedback">copied!</p>
-        <textarea type="text" placeholder="Paste text here..." name="pastearea" class="pastearea paste-enabled"></textarea>
-        <div class="pastearea copybox"></div>
-        <div class="copy-area-control-button-wrapper">
-            <label for="editmode">
-                <input type="checkbox" name="editmode" id="editmode">
-                <span>Edit</span>
-            </label>
-            <button id="clear-pastearea">Clear</button>
-        </div>
-    </main>
+    <div class="site-wrapper">
+        <header>
+            <h1>copyclick.</h1>
+            <h3>Just paste it for later and copy with one click.</h3>
+        </header>
 
-    <footer>
-        <p>(c) Steven Hernandez</p>
-    </footer>
-    <p style="position: absolute; bottom: 0; right: 0;font-size: .8rem;">v0.1</p>
+        <main>
+            <p class="copy-feedback">copied!</p>
+            <textarea type="text" placeholder="Paste text here..." name="pastearea" class="pastearea paste-enabled"></textarea>
+            <div class="pastearea copybox"></div>
+            <div class="copy-area-control-button-wrapper">
+                <label for="editmode">
+                    <input type="checkbox" name="editmode" id="editmode">
+                    <span>Edit</span>
+                </label>
+                <button id="clear-pastearea">Clear</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>(c) Steven Hernandez</p>
+        </footer>
+        <p style="position: absolute; bottom: 0; right: 0;font-size: .8rem;">v0.1</p>
+    </div>
 </body>
 </html>
