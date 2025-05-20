@@ -119,6 +119,9 @@ main {
     opacity: 0;
     position: absolute;
     transition: opacity 0.3s;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .copy-feedback.copied {
