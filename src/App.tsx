@@ -16,6 +16,10 @@ function App() {
         setItems([...items, { id: numericId, text: '' }]);
     };
 
+    const removeItem = (idToRemove: number) => {
+        setItems(items.filter((item) => item.id !== idToRemove));
+    };
+
     return (
         <>
             <div className="site-wrapper">
@@ -26,7 +30,11 @@ function App() {
 
                 <main>
                     {items.map((item) => (
-                        <CopyClickItem key={item.id} id={item.id} />
+                        <CopyClickItem
+                            key={item.id}
+                            id={item.id}
+                            onRemove={removeItem}
+                        />
                     ))}
                     <button className="add-item-button" onClick={addNewItem}>
                         <div>Add Item</div>

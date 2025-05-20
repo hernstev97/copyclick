@@ -136,6 +136,31 @@ main {
     transform: translateY(20px);
     transition: all 0.3s ease;
     animation: fadeIn 0.3s forwards;
+
+    .close-button {
+        position: absolute;
+        top: -7px;
+        right: -7px;
+        width: 20px;
+        height: 20px;
+        background-color: var(--violet);
+        color: var(--jet);
+        border: none;
+        border-radius: 10px;
+        line-height: 1rem;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+            background-color: var(--eggplant);
+            transform: scale(1.1);
+        }
+
+        &:active {
+            transform: scale(0.9);
+        }
+    }
 }
 
 @keyframes fadeIn {
@@ -216,4 +241,11 @@ main {
 
 [id*='editmode-'] {
     margin-right: 10px;
+}
+
+header {
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
 }

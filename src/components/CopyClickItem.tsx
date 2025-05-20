@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import type { CopyClickItemProps } from '../types/CopyClickItemProps';
 
-function CopyClickItem({ id }: CopyClickItemProps) {
+function CopyClickItem({ id, onRemove }: CopyClickItemProps) {
     const [text, setText] = useState('');
     const [isEditMode, setIsEditMode] = useState(true);
     const [copied, setCopied] = useState(false);
@@ -56,9 +56,20 @@ function CopyClickItem({ id }: CopyClickItemProps) {
         setTimeout(adjustTextareaHeight, 0);
     };
 
+    const handleRemove = () => {
+        onRemove(id);
+    };
+
     return (
         <>
             <div className="copy-area-wrapper">
+                <button
+                    className="close-button"
+                    onClick={handleRemove}
+                    aria-label="Close"
+                >
+                    ×
+                </button>
                 <p className={`copy-feedback ${copied ? 'copied' : ''}`}>
                     copied!
                 </p>
