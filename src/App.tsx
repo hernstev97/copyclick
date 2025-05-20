@@ -1,28 +1,19 @@
-import { useState } from 'react';
 import './App.scss';
+import { getVersionString } from './utils/version';
+import CopyClickItem from './components/CopyClickItem';
+import type { CopyClickItemType } from './types/CopyClickItemType';
+import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-    const [text, setText] = useState('');
-    const [isEditMode, setIsEditMode] = useState(true);
-    const [copied, setCopied] = useState(false);
+    const versionString = getVersionString();
+    const [items, setItems] = useState<CopyClickItemType[]>([
+        { id: 1, text: '' },
+    ]);
 
-    const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setText(e.target.value);
-    };
-
-    const handlePaste = () => {
-        setTimeout(() => setIsEditMode(false), 0);
-    };
-
-    const handleCopy = () => {
-        navigator.clipboard.writeText(text);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-    };
-
-    const handleClear = () => {
-        setText('');
-        setIsEditMode(true);
+    const addNewItem = () => {
+        const numericId = parseInt(uuidv4().replace(/-/g, '').slice(0, 8), 16);
+        setItems([...items, { id: numericId, text: '' }]);
     };
 
     return (
@@ -34,54 +25,32 @@ function App() {
                 </header>
 
                 <main>
-                    <p className={`copy-feedback ${copied ? 'copied' : ''}`}>
-                        copied!
-                    </p>
-
-                    {isEditMode && (
-                        <textarea
-                            value={text}
-                            onChange={handleTextChange}
-                            onPaste={handlePaste}
-                            placeholder="Paste text here..."
-                            name="pastearea"
-                            className="pastearea paste-enabled"
-                        ></textarea>
-                    )}
-
-                    {!isEditMode && (
-                        <div className="pastearea copybox" onClick={handleCopy}>
-                            {text}
-                        </div>
-                    )}
-
-                    <div className="copy-area-control-button-wrapper">
-                        <label htmlFor="editmode">
-                            <input
-                                type="checkbox"
-                                name="editmode"
-                                id="editmode"
-                                checked={isEditMode}
-                                onChange={() => setIsEditMode(!isEditMode)}
-                            />
-                            <span>Edit</span>
-                        </label>
-                        <button onClick={handleClear}>Clear</button>
-                    </div>
+                    {items.map((item) => (
+                        <CopyClickItem key={item.id} id={item.id} />
+                    ))}
+                    <button className="add-item-button" onClick={addNewItem}>
+                        <div>Add Item</div>
+                    </button>
                 </main>
-
-                <footer>
-                    <p>(c) Steven Hernandez</p>
-                </footer>
                 <p
                     style={{
-                        position: 'absolute',
+                        position: 'fixed',
+                        bottom: 0,
+                        left: 0,
+                        fontSize: '.8rem',
+                    }}
+                >
+                    (c) Steven Hernandez
+                </p>
+                <p
+                    style={{
+                        position: 'fixed',
                         bottom: 0,
                         right: 0,
                         fontSize: '.8rem',
                     }}
                 >
-                    v0.1
+                    {versionString}
                 </p>
             </div>
         </>

@@ -39,6 +39,7 @@
 
 html {
     font-size: 18px;
+    background-color: var(--night);
 }
 
 .site-wrapper {
@@ -62,7 +63,7 @@ main {
 .pastearea {
     // display: none;
     appearance: none;
-    background-color: #2a2b2a;
+    background-color: var(--jet);
     border-radius: 10px;
     border-width: 3px;
     border-style: solid;
@@ -75,16 +76,12 @@ main {
     padding: 1rem;
     line-height: 1.5;
     transition: border-color 0.3s ease;
+    margin-bottom: 1rem;
 }
 
 .pastearea:focus {
     border-color: #996888;
 }
-
-// .pastearea.paste-enabled,
-// .pastearea.copy-enabled {
-//     display: block;
-// }
 
 .copybox {
     cursor: pointer;
@@ -120,9 +117,103 @@ main {
 
 .copy-feedback {
     opacity: 0;
+    position: absolute;
     transition: opacity 0.3s;
 }
 
 .copy-feedback.copied {
     opacity: 1;
+}
+
+.copy-area-wrapper {
+    position: relative;
+    background-color: #202020;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 666px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.add-item-button {
+    background-color: var(--violet);
+    color: var(--jet);
+    border: none;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    padding: 5px;
+    transition: all 0.3s ease;
+    position: fixed;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 25px;
+    bottom: 50px;
+    left: 50px;
+    cursor: pointer;
+    z-index: 1000;
+
+    div {
+        opacity: 0;
+        position: absolute;
+        left: calc(100% + 10px);
+        top: 12px;
+        width: 80px;
+        background-color: var(--jet);
+        padding: 5px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -7px; // Position to left side of tooltip
+            transform: translateY(-50%); // Center vertically
+            border-style: solid;
+            border-width: 6px 7px 6px 0; // Create a right-pointing triangle
+            border-color: transparent var(--jet) transparent transparent; // Only show right edge
+        }
+    }
+
+    &::before,
+    &::after {
+        content: '';
+        display: inline-block;
+        width: 30px;
+        height: 4px;
+        background-color: var(--night);
+        border-radius: 5px;
+        position: absolute;
+        left: 10px;
+        top: 23px;
+    }
+
+    &::before {
+        transform: rotate(90deg);
+    }
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &:hover div {
+        opacity: 1;
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+}
+
+[id*='editmode-'] {
+    margin-right: 10px;
 }
