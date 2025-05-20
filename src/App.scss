@@ -4,11 +4,11 @@
     --black: black;
 
     --night: #141514;
-    --jet: #2A2B2A;
+    --jet: #2a2b2a;
     --eggplant: #5e4955;
     --violet: #996888;
     --timberwolf: #ddd5d0;
-    --ashgray: #B8B8AA;
+    --ashgray: #b8b8aa;
 }
 
 .darkmode {
@@ -16,23 +16,23 @@
     --black: white;
 
     --night: #141514;
-    --jet: #2A2B2A;
+    --jet: #2a2b2a;
     --eggplant: #5e4955;
     --violet: #996888;
     --timberwolf: #ddd5d0;
-    --ashgray: #B8B8AA;
+    --ashgray: #b8b8aa;
 }
 
 * {
     color: var(--timberwolf);
-    font-family: "JetBrains Mono", monospace;
+    font-family: 'JetBrains Mono', monospace;
     font-optical-sizing: auto;
     font-style: normal;
 
-    -moz-box-sizing: border-box; 
-    -webkit-box-sizing: border-box; 
-    box-sizing: border-box; 
-    
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
     margin: 0;
     padding: 0;
 }
@@ -41,14 +41,14 @@ html {
     font-size: 18px;
 }
 
-body {
+.site-wrapper {
     background-color: var(--night);
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     height: 100vh;
-    padding: 1rem; 
+    padding: 1rem;
 }
 
 main {
@@ -60,9 +60,9 @@ main {
 }
 
 .pastearea {
-    display: none;
+    // display: none;
     appearance: none;
-    background-color: #2A2B2A;
+    background-color: #2a2b2a;
     border-radius: 10px;
     border-width: 3px;
     border-style: solid;
@@ -74,20 +74,21 @@ main {
     font-size: 1rem;
     padding: 1rem;
     line-height: 1.5;
-    transition: border-color .3s ease;
+    transition: border-color 0.3s ease;
 }
 
 .pastearea:focus {
     border-color: #996888;
 }
 
-.pastearea.paste-enabled, .pastearea.copy-enabled {
-    display: block;
-}
+// .pastearea.paste-enabled,
+// .pastearea.copy-enabled {
+//     display: block;
+// }
 
 .copybox {
     cursor: pointer;
-    transition: all .2s;
+    transition: all 0.2s;
 }
 
 .copybox:hover {
@@ -109,12 +110,12 @@ main {
     border-radius: 5px;
     padding: 5px;
     background-color: var(--violet);
-    transition: background-color .3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .copy-area-control-button-wrapper button:hover {
     background-color: var(--eggplant);
-    cursor: pointer
+    cursor: pointer;
 }
 
 .copy-feedback {
