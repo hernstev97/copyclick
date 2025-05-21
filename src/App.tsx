@@ -5,11 +5,12 @@ import type { CopyClickItemType } from './types/CopyClickItemType';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import AddItemSkeleton from './components/AddItemSkeleton';
+import ThemeToggle from './components/ThemeToggle';
 
 function App() {
     const versionString = getVersionString();
     const [items, setItems] = useState<CopyClickItemType[]>([
-        { id: 1, text: '' },
+        { id: 0, text: '' },
     ]);
 
     const addNewItem = () => {
@@ -24,6 +25,7 @@ function App() {
     return (
         <>
             <div className="cc-app">
+                <ThemeToggle />
                 <header>
                     <h1>copyclick.</h1>
                     <h3>Just paste it for later and copy with one click.</h3>

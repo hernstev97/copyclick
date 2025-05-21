@@ -1,7 +1,7 @@
 // Button styles
 .cc-add-area {
     background: var(--main-gradient);
-    color: rgb(var(--jet));
+    color: hsl(var(--jet));
     border: none;
     border-radius: 100%;
     width: 50px;
@@ -20,7 +20,7 @@
         left: calc(100% + 10px);
         top: 12px;
         width: 80px;
-        background-color: rgb(var(--jet));
+        background-color: hsl(var(--jet));
         padding: 5px;
         border-radius: 5px;
         transition: all 0.3s ease;
@@ -33,7 +33,7 @@
             transform: translateY(-50%);
             border-style: solid;
             border-width: 6px 7px 6px 0;
-            border-color: transparent rgb(var(--jet)) transparent transparent;
+            border-color: transparent hsl(var(--jet)) transparent transparent;
         }
     }
 
@@ -43,7 +43,7 @@
         display: inline-block;
         width: 30px;
         height: 4px;
-        background-color: rgb(var(--white));
+        background-color: hsl(var(--white));
         border-radius: 5px;
         position: absolute;
         left: 10px;
@@ -65,4 +65,16 @@
     &:active {
         transform: scale(0.9);
     }
+}
+.dark-mode-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    appearance: none;
+    background: hsl(var(--jet));
+    border: none;
+    border-radius: 5px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
 }

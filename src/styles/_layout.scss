@@ -1,11 +1,12 @@
 // Site layout styles
 .cc-app {
-    background-color: rgb(var(--night));
+    background-color: hsl(var(--night));
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     padding: 1rem;
 }
 

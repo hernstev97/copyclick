@@ -5,7 +5,7 @@ $transition--out: $transition-duration ease-out;
 // Styles for the copy/paste areas
 .cc-area {
     position: relative;
-    background-color: #202020;
+    background-color: hsl(var(--darkgrey));
     padding: 1rem;
     border-radius: 10px;
     width: 100%;
@@ -16,7 +16,7 @@ $transition--out: $transition-duration ease-out;
         border: 3px solid transparent;
         border-radius: 10px;
         background:
-            linear-gradient(rgb(var(--jet)), rgb(var(--jet))) padding-box,
+            linear-gradient(hsl(var(--jet)), hsl(var(--jet))) padding-box,
             var(--main-gradient) border-box;
         width: 100%;
         min-height: 1rem;
@@ -31,7 +31,7 @@ $transition--out: $transition-duration ease-out;
         &:hover {
             border: 5px solid transparent;
             background:
-                linear-gradient(rgb(var(--jet)), rgb(var(--jet))) padding-box,
+                linear-gradient(hsl(var(--jet)), hsl(var(--jet))) padding-box,
                 var(--main-gradient-reverse) border-box;
         }
 
@@ -41,7 +41,7 @@ $transition--out: $transition-duration ease-out;
             border: 3px solid transparent;
             border-radius: 10px;
             background:
-                linear-gradient(rgb(var(--night)), rgb(var(--night)))
+                linear-gradient(hsl(var(--night)), hsl(var(--night)))
                     padding-box,
                 var(--main-gradient) border-box;
 
@@ -49,7 +49,7 @@ $transition--out: $transition-duration ease-out;
                 transition: opacity $transition--in;
                 border: 5px solid transparent;
                 background:
-                    linear-gradient(rgb(var(--night)), rgb(var(--night)))
+                    linear-gradient(hsl(var(--night)), hsl(var(--night)))
                         padding-box,
                     var(--main-gradient-reverse) border-box;
             }
@@ -63,7 +63,7 @@ $transition--out: $transition-duration ease-out;
         justify-content: space-between;
 
         &__clear {
-            color: rgb(var(--white));
+            color: hsl(var(--white));
             appearance: none;
             border: none;
             outline: none;
@@ -86,8 +86,8 @@ $transition--out: $transition-duration ease-out;
         right: -7px;
         width: 20px;
         height: 20px;
-        background-color: rgb(var(--white));
-        color: var(--black);
+        background-color: hsl(var(--black));
+        color: hsl(var(--white));
         border: none;
         border-radius: 10px;
         line-height: 1rem;
@@ -96,7 +96,8 @@ $transition--out: $transition-duration ease-out;
         transition: all $transition--out;
 
         &:hover {
-            background-color: rgb(var(--eggplant));
+            background-color: hsl(var(--pink));
+            color: hsl(var(--white));
             transform: scale(1.1);
         }
 
@@ -129,7 +130,7 @@ $transition--out: $transition-duration ease-out;
         .cc-area--textbox {
             border: 3px solid transparent;
             background:
-                linear-gradient(rgb(var(--jet)), rgb(var(--jet))) padding-box,
+                linear-gradient(hsl(var(--jet)), hsl(var(--jet))) padding-box,
                 var(--main-gradient) border-box;
             position: relative;
         }
@@ -164,7 +165,7 @@ $transition--out: $transition-duration ease-out;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        fill: rgb(var(--white));
+        fill: hsl(var(--white));
         opacity: 0.5;
         transition: opacity $transition--out;
 

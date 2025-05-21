@@ -1,42 +1,42 @@
 // Color variables
 :root {
-    /* color values in RGB format */
-    --white: 255, 255, 255;
-    --black: 0, 0, 0;
-    --night: 17, 17, 17;
-    --jet: 42, 43, 42;
-    --grey: 85, 85, 85;
-    --eggplant: 94, 73, 85;
-    --violet: 153, 104, 136;
-    --ashgray: 184, 184, 170;
-    --pink: 233, 75, 186;
-    --red: 255, 0, 72;
+    /* color values in HSL format */
+    --white: 0, 0%, 0%;
+    --black: 0, 0%, 100%;
+    --night: 0, 0%, 93%;
+    --darkgrey: 0, 0%, 80%;
+    --jet: 120, 1%, 70%;
+    --grey: 0, 0%, 67%;
+
+    --pink: 320, 81%, 60%;
+    --red: 345, 100%, 50%;
 
     --main-gradient: linear-gradient(
         45deg,
-        rgb(var(--pink)) 0%,
-        rgb(var(--red)) 100%
+        hsl(var(--pink)) 0%,
+        hsl(var(--red)) 100%
     );
     --main-gradient-reverse: linear-gradient(
         135deg,
-        rgb(var(--pink)) 0%,
-        rgb(var(--red)) 100%
+        hsl(var(--pink)) 0%,
+        hsl(var(--red)) 100%
     );
     --faux-gradient: linear-gradient(
         45deg,
-        rgb(var(--grey)) 0%,
-        rgb(var(--grey)) 100%
+        hsl(var(--grey)) 0%,
+        hsl(var(--grey)) 100%
     );
 }
 
 // Dark mode variables
 .darkmode {
-    --white: 0, 0, 0;
-    --black: 255, 255, 255;
-    --night: 20, 21, 20;
-    --jet: 42, 43, 42;
-    --eggplant: 94, 73, 85;
-    --violet: 153, 104, 136;
-    --timberwolf: 221, 213, 208;
-    --ashgray: 184, 184, 170;
+    --white: 0, 0%, 100%;
+    --black: 0, 0%, 0%;
+    --night: 0, 0%, 7%;
+    --darkgrey: 0, 0%, 13%;
+    --jet: 120, 1%, 17%;
+    --grey: 0, 0%, 33%;
+
+    --pink: 320, 81%, 60%;
+    --red: 345, 100%, 50%;
 }
