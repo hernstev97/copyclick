@@ -1,9 +1,10 @@
-import './App.scss';
+import './styles/main.scss';
 import { getVersionString } from './utils/version';
 import CopyClickItem from './components/CopyClickItem';
 import type { CopyClickItemType } from './types/CopyClickItemType';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import AddItemSkeleton from './components/AddItemSkeleton';
 
 function App() {
     const versionString = getVersionString();
@@ -22,7 +23,7 @@ function App() {
 
     return (
         <>
-            <div className="site-wrapper">
+            <div className="cc-app">
                 <header>
                     <h1>copyclick.</h1>
                     <h3>Just paste it for later and copy with one click.</h3>
@@ -36,9 +37,10 @@ function App() {
                             onRemove={removeItem}
                         />
                     ))}
-                    <button className="add-item-button" onClick={addNewItem}>
+                    <AddItemSkeleton onClick={addNewItem} />
+                    {/* <button className="cc-add-area" onClick={addNewItem}>
                         <div>Add Item</div>
-                    </button>
+                    </button> */}
                 </main>
                 <p
                     style={{

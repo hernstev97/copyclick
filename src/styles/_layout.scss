@@ -1,0 +1,18 @@
+// Site layout styles
+.cc-app {
+    background-color: rgb(var(--night));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100vh;
+    padding: 1rem;
+}
+
+main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}

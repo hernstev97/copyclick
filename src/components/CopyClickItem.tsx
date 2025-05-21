@@ -62,15 +62,17 @@ function CopyClickItem({ id, onRemove }: CopyClickItemProps) {
 
     return (
         <>
-            <div className="copy-area-wrapper">
+            <div className="cc-area">
                 <button
-                    className="close-button"
+                    className="cc-area--close-button"
+                    type="button"
+                    title="Remove"
                     onClick={handleRemove}
                     aria-label="Close"
                 >
                     ×
                 </button>
-                <p className={`copy-feedback ${copied ? 'copied' : ''}`}>
+                <p className={`cc-area--toast ${copied ? 'visible' : ''}`}>
                     copied!
                 </p>
 
@@ -82,14 +84,14 @@ function CopyClickItem({ id, onRemove }: CopyClickItemProps) {
                         onPaste={handlePaste}
                         placeholder="Paste text here..."
                         name="pastearea"
-                        className="pastearea paste-enabled"
+                        className="cc-area--textbox cc-area--textbox__edit"
                         style={{ height: `${height}px` }}
                     ></textarea>
                 )}
 
                 {!isEditMode && (
                     <div
-                        className="pastearea copybox"
+                        className="cc-area--textbox cc-area--textbox__copy"
                         onClick={handleCopy}
                         style={{ height: `${height}px` }}
                     >
@@ -97,7 +99,7 @@ function CopyClickItem({ id, onRemove }: CopyClickItemProps) {
                     </div>
                 )}
 
-                <div className="copy-area-control-button-wrapper">
+                <div className="cc-area--controls">
                     <label htmlFor={`editmode-${id}`}>
                         <input
                             type="checkbox"
@@ -108,7 +110,12 @@ function CopyClickItem({ id, onRemove }: CopyClickItemProps) {
                         />
                         <span>Edit</span>
                     </label>
-                    <button onClick={handleClear}>Clear</button>
+                    <button
+                        onClick={handleClear}
+                        className="cc-area--controls__clear"
+                    >
+                        Clear
+                    </button>
                 </div>
             </div>
         </>
