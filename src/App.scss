@@ -9,6 +9,8 @@
     --violet: #996888;
     --timberwolf: #ddd5d0;
     --ashgray: #b8b8aa;
+
+    --main-gradient: linear-gradient(45deg, #E94BBA 0%, #FF0048 100%);
 }
 
 .darkmode {
@@ -61,13 +63,12 @@ main {
 }
 
 .pastearea {
-    // display: none;
     appearance: none;
-    background-color: var(--jet);
+    border: 3px solid transparent; // Needed for gradient border
     border-radius: 10px;
-    border-width: 3px;
-    border-style: solid;
-    border-color: #5e4955;
+    background: 
+        linear-gradient(var(--jet), var(--jet)) padding-box, // Inner background
+        linear-gradient(45deg, #E94BBA 0%, #FF0048 100%) border-box; // Border gradient
     width: 100%;
     max-width: 666px;
     min-height: 1rem;
@@ -75,21 +76,33 @@ main {
     font-size: 1rem;
     padding: 1rem;
     line-height: 1.5;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
     margin-bottom: 1rem;
 }
 
-.pastearea:focus {
-    border-color: #996888;
+.pastearea:focus,
+.pastearea:hover {
+    border: 5px solid transparent; // Needed for gradient border
+    background: 
+        linear-gradient(var(--jet), var(--jet)) padding-box, // Inner background
+        linear-gradient(135deg, #E94BBA 0%, #FF0048 100%) border-box; // Border gradient
 }
 
 .copybox {
     cursor: pointer;
     transition: all 0.2s;
+    border: 3px solid transparent; // Needed for background-clip
+    border-radius: 10px; // Adjust as needed
+    background: 
+        linear-gradient(var(--night), var(--night)) padding-box, // Inner background
+        linear-gradient(45deg, #E94BBA 0%, #FF0048 100%) border-box; // Border gradient
 }
 
 .copybox:hover {
-    border: 3px solid var(--violet);
+    border: 5px solid transparent; // Needed for background-clip
+    background: 
+        linear-gradient(var(--night), var(--night)) padding-box, // Inner background
+        linear-gradient(135deg, #E94BBA 0%, #FF0048 100%) border-box; // Border gradient
 }
 
 .copy-area-control-button-wrapper {
@@ -100,14 +113,15 @@ main {
 }
 
 .copy-area-control-button-wrapper button {
-    color: var(--jet);
+    color: var(--white);
     appearance: none;
     border: none;
     outline: none;
     border-radius: 5px;
     padding: 5px;
-    background-color: var(--violet);
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
+    background: 
+        linear-gradient(45deg, #E94BBA 0%, #FF0048 100%) border-box; // Border gradient
 }
 
 .copy-area-control-button-wrapper button:hover {
@@ -146,8 +160,8 @@ main {
         right: -7px;
         width: 20px;
         height: 20px;
-        background-color: var(--violet);
-        color: var(--jet);
+        background-color: var(--white);
+        color: var(--black);
         border: none;
         border-radius: 10px;
         line-height: 1rem;
@@ -174,7 +188,7 @@ main {
 }
 
 .add-item-button {
-    background-color: var(--violet);
+    background: var(--main-gradient);
     color: var(--jet);
     border: none;
     border-radius: 100%;
@@ -185,7 +199,7 @@ main {
     position: fixed;
     box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 25px;
     bottom: 50px;
-    left: 50px;
+    left: calc(50% - 25px);
     cursor: pointer;
     z-index: 1000;
 
@@ -218,7 +232,7 @@ main {
         display: inline-block;
         width: 30px;
         height: 4px;
-        background-color: var(--night);
+        background-color: var(--white);
         border-radius: 5px;
         position: absolute;
         left: 10px;
