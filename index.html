@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="./public/favicon.svg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script>
+    // Check for dark mode preference and apply immediately
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches ||
+        localStorage.getItem('darkMode') === 'true') {
+      document.documentElement.classList.add('darkmode');
+      document.body.classList.add('darkmode');
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap"
+    rel="stylesheet">
+
+  <title>copyclick | paste and copy with a single click</title>
+  <meta name="description" content="CopyClick lets you paste and copy with a single click. Boost your productivity with this simple, fast tool." />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://yourdomain.com/" />
+  <meta property="og:title" content="CopyClick | Paste and copy with a single click" />
+  <meta property="og:description" content="CopyClick lets you paste and copy with a single click. Boost your productivity with this simple, fast tool." />
+  <meta property="og:image" content="https://yourdomain.com/og-image.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://yourdomain.com/" />
+  <meta name="twitter:title" content="CopyClick | Paste and copy with a single click" />
+  <meta name="twitter:description" content="CopyClick lets you paste and copy with a single click. Boost your productivity with this simple, fast tool." />
+  <meta name="twitter:image" content="https://yourdomain.com/og-image.png" />
+
+  <meta name="color-scheme" content="dark light">
+</head>
+
+<body>
+  <div id="root">
+  </div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
