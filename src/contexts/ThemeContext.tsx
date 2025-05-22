@@ -21,7 +21,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     });
 
     useEffect(() => {
-        // Apply dark mode class to body
+        // Apply dark mode class to html element
         if (darkMode) {
             document.documentElement.classList.add('darkmode');
         } else {

@@ -11,6 +11,18 @@ $transition--out: $transition-duration ease-out;
     width: 100%;
     max-width: 666px;
 
+    &--title-wrapper {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    &--title {
+        font-size: 0.8rem;
+        color: hsl(var(--white));
+        margin-bottom: 0.5rem;
+    }
+
     &--textbox {
         appearance: none;
         border: 3px solid transparent;
@@ -19,15 +31,18 @@ $transition--out: $transition-duration ease-out;
             linear-gradient(hsl(var(--jet)), hsl(var(--jet))) padding-box,
             var(--main-gradient) border-box;
         width: 100%;
-        min-height: 1rem;
+        min-height: 100px;
+        height: auto;
         outline: none;
         font-size: 1rem;
         padding: 1rem;
         line-height: 1.5;
         transition: border $transition--out;
         margin-bottom: 1rem;
+        resize: none;
+        overflow: hidden;
 
-        &:focus,
+        &:active,
         &:hover {
             border: 5px solid transparent;
             background:
@@ -82,27 +97,23 @@ $transition--out: $transition-duration ease-out;
 
     &--close-button {
         position: absolute;
-        top: -7px;
-        right: -7px;
-        width: 20px;
-        height: 20px;
-        background-color: hsl(var(--black));
+        right: 0;
+        background-color: transparent;
         color: hsl(var(--white));
         border: none;
-        border-radius: 10px;
-        line-height: 1rem;
-        font-size: 1.2rem;
+        border-radius: 5px;
+        font-size: 0.6rem;
+        padding: 2px;
+        margin: 0;
         cursor: pointer;
-        transition: all $transition--out;
+        transition: background-color $transition--out;
 
-        &:hover {
-            background-color: hsl(var(--pink));
-            color: hsl(var(--white));
-            transform: scale(1.1);
+        &:hover,
+        &:focus {
+            background-color: hsl(var(--red));
         }
-
         &:active {
-            transform: scale(0.9);
+            background-color: hsl(var(--red));
         }
     }
 
@@ -173,5 +184,9 @@ $transition--out: $transition-duration ease-out;
             opacity: 1;
             transition: opacity $transition--in;
         }
+    }
+
+    [type='checkbox'] {
+        margin-right: 0.5rem;
     }
 }

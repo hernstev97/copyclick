@@ -1,25 +1,18 @@
 import './styles/main.scss';
 import { getVersionString } from './utils/version';
 import CopyClickItem from './components/CopyClickItem';
-import type { CopyClickItemType } from './types/CopyClickItemType';
-import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import AddItemSkeleton from './components/AddItemSkeleton';
 import ThemeToggle from './components/ThemeToggle';
+import { useData } from './contexts/UserData';
 
 function App() {
     const versionString = getVersionString();
-    const [items, setItems] = useState<CopyClickItemType[]>([
-        { id: 0, text: '' },
-    ]);
+    const { items, addItem, removeItem, updateItem, clearItems } = useData();
 
     const addNewItem = () => {
         const numericId = parseInt(uuidv4().replace(/-/g, '').slice(0, 8), 16);
-        setItems([...items, { id: numericId, text: '' }]);
-    };
-
-    const removeItem = (idToRemove: number) => {
-        setItems(items.filter((item) => item.id !== idToRemove));
+        addItem({ id: numericId, text: '', editState: true });
     };
 
     return (
@@ -32,17 +25,26 @@ function App() {
                 </header>
 
                 <main>
+                    {items.length > 0 && (
+                        <button
+                            className="cc-app--clearAll"
+                            onClick={clearItems}
+                        >
+                            CLEAR ALL
+                        </button>
+                    )}
+
                     {items.map((item) => (
                         <CopyClickItem
                             key={item.id}
                             id={item.id}
+                            text={item.text}
+                            editState={item.editState}
                             onRemove={removeItem}
+                            onUpdate={updateItem}
                         />
                     ))}
                     <AddItemSkeleton onClick={addNewItem} />
-                    {/* <button className="cc-add-area" onClick={addNewItem}>
-                        <div>Add Item</div>
-                    </button> */}
                 </main>
                 <p
                     style={{

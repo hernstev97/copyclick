@@ -11,7 +11,7 @@ const ThemeToggle = () => {
                 darkMode ? 'Switch to light mode' : 'Switch to dark mode'
             }
         >
-            {darkMode ? '☀️' : '🌙'}
+            Change Theme {darkMode ? '☀️' : '🌙'}
         </button>
     );
 };

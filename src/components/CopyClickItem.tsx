@@ -1,46 +1,46 @@
-import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useLayoutEffect, useRef } from 'react';
 import type { CopyClickItemProps } from '../types/CopyClickItemProps';
 
-function CopyClickItem({ id, onRemove }: CopyClickItemProps) {
-    const [text, setText] = useState('');
-    const [isEditMode, setIsEditMode] = useState(true);
+const TEXTAREA_BUFFER = 10; // Buffer to prevent scrollbar from appearing
+
+function CopyClickItem({
+    id,
+    text,
+    editState,
+    onRemove,
+    onUpdate,
+}: CopyClickItemProps) {
     const [copied, setCopied] = useState(false);
-    const [height, setHeight] = useState(0);
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         adjustTextareaHeight();
     }, [text]);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         adjustTextareaHeight();
     }, []);
 
     const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setText(e.target.value);
-        adjustTextareaHeight();
+        onUpdate({ id, text: e.target.value, editState });
     };
 
     const adjustTextareaHeight = () => {
         if (textareaRef.current) {
-            const scrollTop = textareaRef.current.scrollTop;
-
             textareaRef.current.style.height = 'auto';
-
-            const newHeight = textareaRef.current.scrollHeight + 10;
-            textareaRef.current.style.height = `${newHeight}px`;
-            setHeight(newHeight);
-
-            textareaRef.current.scrollTop = scrollTop;
+            textareaRef.current.style.height =
+                textareaRef.current.scrollHeight + TEXTAREA_BUFFER + 'px';
         }
     };
 
     const handlePaste = () => {
         setTimeout(() => {
-            setIsEditMode(false);
-            adjustTextareaHeight();
+            onUpdate({
+                id,
+                text: textareaRef.current?.value || '',
+                editState: false,
+            });
         }, 0);
     };
 
@@ -51,9 +51,7 @@ function CopyClickItem({ id, onRemove }: CopyClickItemProps) {
     };
 
     const handleClear = () => {
-        setText('');
-        setIsEditMode(true);
-        setTimeout(adjustTextareaHeight, 0);
+        onUpdate({ id, text: '', editState: true });
     };
 
     const handleRemove = () => {
@@ -63,41 +61,34 @@ function CopyClickItem({ id, onRemove }: CopyClickItemProps) {
     return (
         <>
             <div className="cc-area">
-                <button
-                    className="cc-area--close-button"
-                    type="button"
-                    title="Remove"
-                    onClick={handleRemove}
-                    aria-label="Close"
-                >
-                    ×
-                </button>
+                <div className="cc-area--title-wrapper">
+                    <p className="cc-area--title">Title (in progress)</p>
+                    <button
+                        className="cc-area--close-button"
+                        type="button"
+                        title="Remove"
+                        onClick={handleRemove}
+                        aria-label="Close"
+                    >
+                        Close
+                    </button>
+                </div>
                 <p className={`cc-area--toast ${copied ? 'visible' : ''}`}>
                     copied!
                 </p>
 
-                {isEditMode && (
-                    <textarea
-                        ref={textareaRef}
-                        value={text}
-                        onChange={handleTextChange}
-                        onPaste={handlePaste}
-                        placeholder="Paste text here..."
-                        name="pastearea"
-                        className="cc-area--textbox cc-area--textbox__edit"
-                        style={{ height: `${height}px` }}
-                    ></textarea>
-                )}
-
-                {!isEditMode && (
-                    <div
-                        className="cc-area--textbox cc-area--textbox__copy"
-                        onClick={handleCopy}
-                        style={{ height: `${height}px` }}
-                    >
-                        {text}
-                    </div>
-                )}
+                <textarea
+                    ref={textareaRef}
+                    value={text}
+                    onChange={handleTextChange}
+                    onPaste={handlePaste}
+                    onClick={!editState ? handleCopy : undefined}
+                    placeholder="Paste text here..."
+                    name="pastearea"
+                    className={`cc-area--textbox ${editState ? 'cc-area--textbox__edit' : 'cc-area--textbox__copy'}`}
+                    // rows={1}
+                    readOnly={!editState}
+                ></textarea>
 
                 <div className="cc-area--controls">
                     <label htmlFor={`editmode-${id}`}>
@@ -105,8 +96,10 @@ function CopyClickItem({ id, onRemove }: CopyClickItemProps) {
                             type="checkbox"
                             name={`editmode-${id}`}
                             id={`editmode-${id}`}
-                            checked={isEditMode}
-                            onChange={() => setIsEditMode(!isEditMode)}
+                            checked={editState}
+                            onChange={() =>
+                                onUpdate({ id, text, editState: !editState })
+                            }
                         />
                         <span>Edit</span>
                     </label>
