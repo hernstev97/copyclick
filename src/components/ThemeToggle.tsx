@@ -5,7 +5,7 @@ const ThemeToggle = () => {
 
     return (
         <button
-            className="dark-mode-toggle"
+            className="cc-button dark-mode-toggle"
             onClick={toggleDarkMode}
             aria-label={
                 darkMode ? 'Switch to light mode' : 'Switch to dark mode'

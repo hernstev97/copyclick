@@ -83,7 +83,7 @@ function CopyClickItem({
                     onChange={handleTextChange}
                     onPaste={handlePaste}
                     onClick={!editState ? handleCopy : undefined}
-                    placeholder="Paste text here..."
+                    placeholder={editState ? 'Paste text here...' : ''}
                     name="pastearea"
                     className={`cc-area--textbox ${editState ? 'cc-area--textbox__edit' : 'cc-area--textbox__copy'}`}
                     // rows={1}

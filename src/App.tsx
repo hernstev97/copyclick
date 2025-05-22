@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import AddItemSkeleton from './components/AddItemSkeleton';
 import ThemeToggle from './components/ThemeToggle';
 import { useData } from './contexts/UserData';
+import InfoModal from './components/InfoModal';
 
 function App() {
     const versionString = getVersionString();
@@ -18,12 +19,12 @@ function App() {
     return (
         <>
             <div className="cc-app">
+                <InfoModal />
                 <ThemeToggle />
                 <header>
                     <h1>copyclick.</h1>
                     <h3>Just paste it for later and copy with one click.</h3>
                 </header>
-
                 <main>
                     {items.length > 0 && (
                         <button
