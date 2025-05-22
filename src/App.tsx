@@ -13,7 +13,13 @@ function App() {
 
     const addNewItem = () => {
         const numericId = parseInt(uuidv4().replace(/-/g, '').slice(0, 8), 16);
-        addItem({ id: numericId, text: '', editState: true });
+        const newTitle = `Snippet ${items.length + 1}`;
+        addItem({
+            id: numericId,
+            title: newTitle,
+            text: '',
+            editState: true,
+        });
     };
 
     return (
@@ -22,8 +28,12 @@ function App() {
                 <InfoModal />
                 <ThemeToggle />
                 <header>
-                    <h1>copyclick.</h1>
-                    <h3>Just paste it for later and copy with one click.</h3>
+                    <div>
+                        <h1>copyclick.</h1>
+                        <h3>
+                            Just paste it for later and copy with one click.
+                        </h3>
+                    </div>
                 </header>
                 <main>
                     {items.length > 0 && (
@@ -39,6 +49,7 @@ function App() {
                         <CopyClickItem
                             key={item.id}
                             id={item.id}
+                            title={item.title}
                             text={item.text}
                             editState={item.editState}
                             onRemove={removeItem}

@@ -3,9 +3,9 @@ import { useState, useEffect, useContext } from 'react';
 
 type CopyAreaDataType = {
     id: number;
+    title: string;
     text: string;
     editState: boolean;
-    name?: string;
 };
 
 type UserDataContextType = {

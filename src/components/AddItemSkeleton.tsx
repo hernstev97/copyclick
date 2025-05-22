@@ -4,10 +4,18 @@ function AddItemSkeleton({ onClick }: AddItemSkeletonProps) {
     return (
         <>
             <button className="cc-area cc-area--skeleton" onClick={onClick}>
-                <div
-                    className="cc-area--textbox cc-area--textbox__edit"
-                    style={{ height: '100px' }}
-                >
+                <div className="cc-area--title-wrapper">
+                    <div className="cc-area--title__skeleton"></div>
+                    <button
+                        className="cc-area--close-button"
+                        type="button"
+                        title="Remove"
+                        aria-label="Close"
+                    >
+                        <span>Close</span>
+                    </button>
+                </div>
+                <div className="cc-area--textbox cc-area--textbox__edit">
                     {/* Updated SVG that works with fill */}
                     <svg
                         className="cc-area--plus-icon"

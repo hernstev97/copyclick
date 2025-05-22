@@ -5,6 +5,7 @@ const TEXTAREA_BUFFER = 10; // Buffer to prevent scrollbar from appearing
 
 function CopyClickItem({
     id,
+    title,
     text,
     editState,
     onRemove,
@@ -23,7 +24,7 @@ function CopyClickItem({
     }, []);
 
     const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        onUpdate({ id, text: e.target.value, editState });
+        onUpdate({ id, title, text: e.target.value, editState });
     };
 
     const adjustTextareaHeight = () => {
@@ -38,6 +39,7 @@ function CopyClickItem({
         setTimeout(() => {
             onUpdate({
                 id,
+                title,
                 text: textareaRef.current?.value || '',
                 editState: false,
             });
@@ -47,11 +49,11 @@ function CopyClickItem({
     const handleCopy = () => {
         navigator.clipboard.writeText(text);
         setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
+        setTimeout(() => setCopied(false), 800);
     };
 
     const handleClear = () => {
-        onUpdate({ id, text: '', editState: true });
+        onUpdate({ id, title, text: '', editState: true });
     };
 
     const handleRemove = () => {
@@ -62,7 +64,7 @@ function CopyClickItem({
         <>
             <div className="cc-area">
                 <div className="cc-area--title-wrapper">
-                    <p className="cc-area--title">Title (in progress)</p>
+                    <p className="cc-area--title">{title}</p>
                     <button
                         className="cc-area--close-button"
                         type="button"
@@ -74,7 +76,7 @@ function CopyClickItem({
                     </button>
                 </div>
                 <p className={`cc-area--toast ${copied ? 'visible' : ''}`}>
-                    copied!
+                    Text copied!
                 </p>
 
                 <textarea
@@ -98,7 +100,12 @@ function CopyClickItem({
                             id={`editmode-${id}`}
                             checked={editState}
                             onChange={() =>
-                                onUpdate({ id, text, editState: !editState })
+                                onUpdate({
+                                    id,
+                                    title,
+                                    text,
+                                    editState: !editState,
+                                })
                             }
                         />
                         <span>Edit</span>

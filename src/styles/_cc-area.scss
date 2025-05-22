@@ -118,12 +118,17 @@ $transition--out: $transition-duration ease-out;
     }
 
     &--toast {
+        font-size: 0.8rem;
         opacity: 0;
         position: absolute;
         transition: opacity $transition--out;
         bottom: 1rem;
         left: 50%;
         transform: translateX(-50%);
+        background-color: hsl(var(--white));
+        color: hsl(var(--black));
+        border-radius: 5px;
+        padding: 5px;
 
         &.visible {
             opacity: 1;
@@ -144,6 +149,7 @@ $transition--out: $transition-duration ease-out;
                 linear-gradient(hsl(var(--jet)), hsl(var(--jet))) padding-box,
                 var(--main-gradient) border-box;
             position: relative;
+            height: 105px;
         }
 
         .cc-area--controls__clear {
@@ -160,6 +166,21 @@ $transition--out: $transition-duration ease-out;
             height: 27.5px;
             width: 70px;
             border-radius: 5px;
+        }
+
+        .cc-area--title__skeleton {
+            background: var(--main-gradient);
+            height: 20px;
+            width: 100px;
+            border-radius: 5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .cc-area--close-button {
+            background: var(--main-gradient);
+            span {
+                opacity: 0;
+            }
         }
 
         &:hover {

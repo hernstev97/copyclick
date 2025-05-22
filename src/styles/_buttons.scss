@@ -101,19 +101,22 @@
     border: none;
     padding: 3px;
     background-color: hsl(var(--jet));
-    transform: scale(1);
     transition:
         background-color $transition--out,
         transform $transition--out;
     cursor: pointer;
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
 
     &:hover,
     &:focus {
         background-color: hsl(var(--red));
-        transform: scale(1.1);
+        transform: translateX(-50%);
     }
     &:active {
         background-color: hsl(var(--red));
-        transform: scale(0.9);
+        transform: translateX(-50%);
     }
 }
