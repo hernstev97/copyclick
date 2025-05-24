@@ -11,17 +11,6 @@ function App() {
     const versionString = getVersionString();
     const { items, addItem, removeItem, updateItem, clearItems } = useData();
 
-    const addNewItem = () => {
-        const numericId = parseInt(uuidv4().replace(/-/g, '').slice(0, 8), 16);
-        const newTitle = `Snippet ${items.length + 1}`;
-        addItem({
-            id: numericId,
-            title: newTitle,
-            text: '',
-            editState: true,
-        });
-    };
-
     return (
         <>
             <div className="cc-app">
@@ -56,25 +45,22 @@ function App() {
                             onUpdate={updateItem}
                         />
                     ))}
-                    <AddItemSkeleton onClick={addNewItem} />
+                    <AddItemSkeleton onClick={() => addItem({
+                            id: uuidv4(),
+                            title: `Snippet ${items.length + 1}`,
+                            text: '',
+                            editState: true,
+                        })
+                    }
+                />
                 </main>
                 <p
-                    style={{
-                        position: 'fixed',
-                        bottom: 0,
-                        left: 0,
-                        fontSize: '.8rem',
-                    }}
+                    className="cc-app--footer cc-app--footer__left"
                 >
                     (c) Steven Hernandez
                 </p>
                 <p
-                    style={{
-                        position: 'fixed',
-                        bottom: 0,
-                        right: 0,
-                        fontSize: '.8rem',
-                    }}
+                    className="cc-app--footer cc-app--footer__right"
                 >
                     {versionString}
                 </p>

@@ -1,8 +1,8 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
-import type { CopyClickItemProps } from '../types/CopyClickItemProps';
+import type { CopyClickItemProps } from '../types/props/CopyClickItemProps';
+import { COPY_TOAST_DURATION, PASTE_TIMEOUT, TEXTAREA_BUFFER } from '../utils/constants';
 
-const TEXTAREA_BUFFER = 10; // Buffer to prevent scrollbar from appearing
-
+// Component to display a single snippet item
 function CopyClickItem({
     id,
     title,
@@ -12,21 +12,26 @@ function CopyClickItem({
     onUpdate,
 }: CopyClickItemProps) {
     const [copied, setCopied] = useState(false);
+    const [copyError, setCopyError] = useState<string | null>(null);
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+    // Call adjustTextareaHeight on text change
     useLayoutEffect(() => {
         adjustTextareaHeight();
     }, [text]);
 
+    // Call adjustTextareaHeight on mount
     useLayoutEffect(() => {
         adjustTextareaHeight();
     }, []);
 
+    // Update local state on change event
     const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         onUpdate({ id, title, text: e.target.value, editState });
     };
 
+    // Adjust textarea height based on content
     const adjustTextareaHeight = () => {
         if (textareaRef.current) {
             textareaRef.current.style.height = 'auto';
@@ -35,6 +40,7 @@ function CopyClickItem({
         }
     };
 
+    // Update local state on paste event
     const handlePaste = () => {
         setTimeout(() => {
             onUpdate({
@@ -43,19 +49,33 @@ function CopyClickItem({
                 text: textareaRef.current?.value || '',
                 editState: false,
             });
-        }, 0);
+        }, PASTE_TIMEOUT);
     };
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(text);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 800);
+    // Copy text to clipboard
+    const handleCopy = async () => {
+        try {
+            if (!navigator.clipboard) {
+                throw new Error('Your browser does not support copying to clipboard');
+            }
+
+            await navigator.clipboard.writeText(text);
+            setCopied(true);
+            setCopyError(null);
+            setTimeout(() => setCopied(false), COPY_TOAST_DURATION);
+        } catch (error) {
+            console.error('Failed to copy text:', error);
+            setCopyError('Failed to copy text. Please try again.');
+            setTimeout(() => setCopyError(null), COPY_TOAST_DURATION * 2);
+        }
     };
 
+    // Clear textarea
     const handleClear = () => {
         onUpdate({ id, title, text: '', editState: true });
     };
 
+    // Remove item
     const handleRemove = () => {
         onRemove(id);
     };
@@ -63,10 +83,10 @@ function CopyClickItem({
     return (
         <>
             <div className="cc-area">
-                <div className="cc-area--title-wrapper">
-                    <p className="cc-area--title">{title}</p>
+                <div className="cc-area__title-wrapper">
+                    <p className="cc-area__title">{title}</p>
                     <button
-                        className="cc-area--close-button"
+                        className="cc-area__close-button"
                         type="button"
                         title="Remove"
                         onClick={handleRemove}
@@ -75,9 +95,14 @@ function CopyClickItem({
                         Close
                     </button>
                 </div>
-                <p className={`cc-area--toast ${copied ? 'visible' : ''}`}>
+                <p className={`cc-area__toast ${copied ? 'visible' : ''}`}>
                     Text copied!
                 </p>
+                {copyError && (
+                    <p className="cc-area__toast cc-area__toast--error visible">
+                        {copyError}
+                    </p>
+                )}
 
                 <textarea
                     ref={textareaRef}
@@ -87,12 +112,11 @@ function CopyClickItem({
                     onClick={!editState ? handleCopy : undefined}
                     placeholder={editState ? 'Paste text here...' : ''}
                     name="pastearea"
-                    className={`cc-area--textbox ${editState ? 'cc-area--textbox__edit' : 'cc-area--textbox__copy'}`}
-                    // rows={1}
+                    className={`cc-area__textbox ${editState ? 'cc-area__textbox--edit' : 'cc-area__textbox--copy'}`}
                     readOnly={!editState}
                 ></textarea>
 
-                <div className="cc-area--controls">
+                <div className="cc-area__controls">
                     <label htmlFor={`editmode-${id}`}>
                         <input
                             type="checkbox"
@@ -112,7 +136,7 @@ function CopyClickItem({
                     </label>
                     <button
                         onClick={handleClear}
-                        className="cc-area--controls__clear"
+                        className="cc-area__controls--clear"
                     >
                         Clear
                     </button>

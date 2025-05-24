@@ -1,11 +1,6 @@
 // Base styles and resets
 * {
     color: hsl(var(--white));
-    font-family: 'JetBrains Mono', monospace;
-    font-optical-sizing: auto;
-    font-style: normal;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -13,16 +8,12 @@
 
 html {
     font-size: 18px;
+    font-optical-sizing: auto;
+    font-style: normal;
     background-color: hsl(var(--night));
-    display: block;
-    min-height: 100vh;
     height: 100vh;
 }
 
-// Typography
-header {
-    min-height: 140px;
-    display: flex;
-    flex-direction: column;
-    padding: 20px 0;
+* {
+    font-family: 'JetBrains Mono', monospace;
 }

@@ -36,6 +36,27 @@
         gap: 1rem;
         position: relative;
     }
+
+    header {
+        min-height: 140px;
+        display: flex;
+        flex-direction: column;
+        padding: 20px 0;
+    }
+
+    &--footer {
+        position: fixed;
+        bottom: 0;
+        font-size: 0.8rem;
+    }
+
+    &--footer__left {
+        left: 0;
+    }
+
+    &--footer__right {
+        right: 0;
+    }
 }
 
 #root {

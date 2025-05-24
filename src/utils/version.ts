@@ -10,7 +10,7 @@ export const getBuildDate = () => {
 // Format version with date in German format (DD.MM.YYYY)
 export const getVersionString = () => {
     const date = getBuildDate();
-    const version = import.meta.env.VITE_APP_VERSION || '0.3';
+    const version = import.meta.env.VITE_APP_VERSION || '0.3.0';
 
     // Format date as DD.MM.YYYY (German format)
     const day = date.getDate().toString().padStart(2, '0');
@@ -18,6 +18,6 @@ export const getVersionString = () => {
     const year = date.getFullYear();
     const germanDate = `${day}.${month}.${year}`;
 
-    // Format: v0.3 (20.05.2024)
+    // Format: v0.3.0 (20.05.2024)
     return `Beta v${version} (${germanDate})`;
 };

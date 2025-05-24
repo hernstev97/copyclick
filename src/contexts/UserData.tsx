@@ -1,19 +1,20 @@
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
+import DOMPurify from 'dompurify';
+import type { SnippetDataType } from '../types/SnippetDataType';
+import type { UserDataContextType } from '../types/context/UserDataContextType';
+import { CURRENT_DATA_VERSION, STORAGE_KEY, VERSION_MISMATCH_MESSAGE } from '../utils/constants';
 
-type CopyAreaDataType = {
-    id: number;
-    title: string;
-    text: string;
-    editState: boolean;
-};
-
-type UserDataContextType = {
-    items: CopyAreaDataType[];
-    addItem: (item: CopyAreaDataType) => void;
-    removeItem: (id: number) => void;
-    updateItem: (item: CopyAreaDataType) => void;
-    clearItems: () => void;
+// Configure DOMPurify to be more permissive with HTML but still safe
+const sanitizeInput = (input: string): string => {
+    return DOMPurify.sanitize(input, {
+        ALLOWED_TAGS: [
+            'a', 'b', 'blockquote', 'code', 'em', 'i', 'li', 'ol', 'strong', 'ul',
+            'p', 'br', 'div', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'table', 'thead', 'tbody', 'tr', 'th', 'td'
+        ],
+        ALLOWED_ATTR: ['href', 'target', 'rel', 'class', 'id', 'style']
+    });
 };
 
 const UserDataContext = React.createContext<UserDataContextType | undefined>(
@@ -23,57 +24,72 @@ const UserDataContext = React.createContext<UserDataContextType | undefined>(
 export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
-    const [items, setItems] = useState<CopyAreaDataType[]>(() => {
-        const storedItems = localStorage.getItem('copyClickItems');
+    const [items, setItems] = useState<SnippetDataType[]>(() => {
+        const storedData = localStorage.getItem(STORAGE_KEY);
 
-        if (storedItems) {
+        if (storedData) {
             try {
-                const parsedItems = JSON.parse(storedItems);
-                if (Array.isArray(parsedItems)) {
-                    return parsedItems; // Return the loaded items as the initial state
-                } else {
-                    console.warn(
-                        'useState initializer: Stored data is not an array. Initializing to empty.'
-                    );
-                    return [];
+                const parsedData = JSON.parse(storedData);
+                
+                // Check if we have the new format with version
+                if (parsedData.version === CURRENT_DATA_VERSION) {
+                    // Sanitize stored data when loading
+                    return parsedData.items.map((item: SnippetDataType) => ({
+                        ...item,
+                        title: sanitizeInput(item.title),
+                        text: sanitizeInput(item.text)
+                    }));
                 }
+
+                // If we have old data, clear it and show a notification
+                localStorage.removeItem(STORAGE_KEY);
+                alert(VERSION_MISMATCH_MESSAGE);
+                return [];
             } catch (error) {
-                console.error(
-                    'useState initializer: Failed to parse items from localStorage. Initializing to empty.',
-                    error
-                );
-                return []; // Default to empty array on error
+                console.error('Failed to parse items from localStorage:', error);
+                return [];
             }
-        } else {
-            console.log(
-                'useState initializer: No items found in localStorage. Initializing to empty.'
-            );
-            return []; // Default to empty array if nothing is stored
         }
+        return [];
     });
 
     useEffect(() => {
-        localStorage.setItem('copyClickItems', JSON.stringify(items));
+        // Store data with version
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            version: CURRENT_DATA_VERSION,
+            items
+        }));
     }, [items]);
 
-    const addItem = (item: CopyAreaDataType) => {
-        setItems((items) => [...items, item]);
+    const addItem = (item: SnippetDataType) => {
+        // Sanitize input before adding
+        const sanitizedItem = {
+            ...item,
+            title: sanitizeInput(item.title),
+            text: sanitizeInput(item.text)
+        };
+        setItems((items) => [...items, sanitizedItem]);
     };
 
-    const removeItem = (id: number) => {
+    const removeItem = (id: string) => {
         setItems((items) => items.filter((item) => item.id !== id));
     };
 
-    const updateItem = (item: CopyAreaDataType) => {
+    const updateItem = (item: SnippetDataType) => {
+        // Sanitize input before updating
+        const sanitizedItem = {
+            ...item,
+            title: sanitizeInput(item.title),
+            text: sanitizeInput(item.text)
+        };
         setItems((items) =>
             items.map((existingItem) =>
-                existingItem.id === item.id ? item : existingItem
+                existingItem.id === sanitizedItem.id ? sanitizedItem : existingItem
             )
         );
     };
 
     const clearItems = () => {
-        console.log('clearing items');
         setItems([]);
     };
 

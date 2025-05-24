@@ -1,13 +1,13 @@
-import type { AddItemSkeletonProps } from '../types/AddItemSkeletonProps';
+import type { AddItemSkeletonProps } from '../types/props/AddItemSkeletonProps';
 
 function AddItemSkeleton({ onClick }: AddItemSkeletonProps) {
     return (
         <>
             <button className="cc-area cc-area--skeleton" onClick={onClick}>
-                <div className="cc-area--title-wrapper">
-                    <div className="cc-area--title__skeleton"></div>
+                <div className="cc-area__title-wrapper">
+                    <div className="cc-area__title-skeleton"></div>
                     <button
-                        className="cc-area--close-button"
+                        className="cc-area__close-button"
                         type="button"
                         title="Remove"
                         aria-label="Close"
@@ -15,10 +15,10 @@ function AddItemSkeleton({ onClick }: AddItemSkeletonProps) {
                         <span>Close</span>
                     </button>
                 </div>
-                <div className="cc-area--textbox cc-area--textbox__edit">
+                <div className="cc-area__textbox cc-area__textbox--edit">
                     {/* Updated SVG that works with fill */}
                     <svg
-                        className="cc-area--plus-icon"
+                        className="cc-area__plus-icon"
                         xmlns="http://www.w3.org/2000/svg"
                         width="64"
                         height="64"
@@ -29,9 +29,9 @@ function AddItemSkeleton({ onClick }: AddItemSkeletonProps) {
                         <rect x="4" y="11" width="16" height="2" />
                     </svg>
                 </div>
-                <div className="cc-area--controls">
-                    <div className="cc-area--controls__editSkeleton"></div>
-                    <div className="cc-area--controls__clear">
+                <div className="cc-area__controls">
+                    <div className="cc-area__controls--editSkeleton"></div>
+                    <div className="cc-area__controls--clear">
                         <span>Clear</span>
                     </div>
                 </div>
