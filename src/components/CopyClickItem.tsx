@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect, useRef } from 'react';
 import { COPY_TOAST_DURATION, PASTE_TIMEOUT, TEXTAREA_BUFFER } from '../utils/constants';
-import { motion, Reorder } from 'motion/react';
+import { motion, Reorder, useDragControls } from 'motion/react';
 import type { SnippetDataType } from '../types/SnippetDataType';
 import { INTERFACE_CONTENT } from '../utils/content';
 import { useData } from '../contexts/UserData';
@@ -28,7 +28,7 @@ const CopyClickItem = React.forwardRef<HTMLDivElement, {
     const [copied, setCopied] = useState(false);
     const [copyError, setCopyError] = useState<string | null>(null);
     const [dragging, setDragging] = useState(false);
-
+    const dragControls = useDragControls(); 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
     // Call adjustTextareaHeight on text change
@@ -104,6 +104,8 @@ const CopyClickItem = React.forwardRef<HTMLDivElement, {
             animate={animate}
             exit={exit}
             transition={transition}
+            dragListener={false}
+            dragControls={dragControls}
             onDragStart={() => {
                 setDragging(true);
             }}
@@ -178,6 +180,9 @@ const CopyClickItem = React.forwardRef<HTMLDivElement, {
                     </label>
                     <div
                         className="cc-area__reorder-handle"
+                        onPointerDown={(e) => {
+                            dragControls.start(e);
+                        }}
                     >
                     <svg viewBox="0 0 534 334" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M66.9997 200.334C103.818 200.334 133.666 230.18 133.667 267C133.667 303.82 103.818 333.667 66.9997 333.667C30.1814 333.667 0.333664 303.82 0.333664 267C0.333837 230.18 30.1815 200.334 66.9997 200.334ZM267 200.334C303.819 200.334 333.666 230.18 333.667 267C333.667 303.819 303.819 333.667 267 333.667C230.18 333.667 200.334 303.819 200.334 267C200.334 230.18 230.18 200.334 267 200.334ZM467 200.334C503.819 200.334 533.666 230.18 533.667 267C533.667 303.819 503.819 333.667 467 333.667C430.18 333.667 400.334 303.819 400.334 267C400.334 230.18 430.18 200.334 467 200.334ZM66.9997 0.333679C103.818 0.333679 133.666 30.181 133.667 66.9997C133.667 103.819 103.819 133.667 66.9997 133.667C30.181 133.667 0.333664 103.818 0.333664 66.9997C0.333839 30.1811 30.1811 0.333854 66.9997 0.333679ZM267 0.333679C303.819 0.333679 333.666 30.1815 333.667 66.9997C333.667 103.818 303.82 133.667 267 133.667C230.18 133.667 200.334 103.818 200.334 66.9997C200.334 30.1816 230.18 0.333852 267 0.333679ZM467 0.333679C503.819 0.333679 533.666 30.1814 533.667 66.9997C533.667 103.818 503.82 133.667 467 133.667C430.18 133.667 400.334 103.818 400.334 66.9997C400.334 30.1816 430.18 0.333844 467 0.333679Z" fill="currentColor"/>
