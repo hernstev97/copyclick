@@ -8,6 +8,8 @@ import { useData } from './contexts/UserData';
 import InfoModal from './components/InfoModal';
 import { AnimatePresence, LayoutGroup, motion, Reorder } from 'motion/react';
 import { MOTION_TRANSITION, MOTION_TRANSITION_DURATION } from './utils/constants';
+import ExportDataButton from './components/ExportDataButton';
+import ImportDataButton from './components/ImportDataButton';
 
 function App() {
     const versionString = getVersionString();
@@ -27,21 +29,28 @@ function App() {
                     </div>
                 </header>
                 <main>
-                    <AnimatePresence>
+                    <div className="cc-app--functional-buttons">
                         {items.length > 0 && (
-                            <motion.button
-                                initial={{ scale: 0, x: '-50%' }}
-                                animate={{ scale: 1, x: '-50%' }}
-                                exit={{ scale: 0, x: '-50%' }}
-                                transition={{ duration: MOTION_TRANSITION_DURATION }}
-                                className="cc-app--clearAll"
-                                onClick={clearItems}
-                            >
-                                CLEAR ALL
-                            </motion.button>
+                            <ExportDataButton />
                         )}
-                    </AnimatePresence>
-
+                        {items.length === 0 && (
+                            <ImportDataButton />
+                        )}
+                        <AnimatePresence>
+                            {items.length > 0 && (
+                                <motion.button
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: 1 }}
+                                    exit={{ scale: 0 }}
+                                    transition={{ duration: MOTION_TRANSITION_DURATION }}
+                                    className="cc-app--clearAll cc-app--button"
+                                    onClick={clearItems}
+                                >
+                                    CLEAR ALL
+                                </motion.button>
+                            )}
+                        </AnimatePresence>
+                    </div>
                     <LayoutGroup>
                         <Reorder.Group 
                             as="div" 

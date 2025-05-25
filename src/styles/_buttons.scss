@@ -93,7 +93,15 @@
     left: 10px;
 }
 
-.cc-app--clearAll {
+.cc-app--functional-buttons {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 666px;
+    justify-content: space-between;
+}
+
+.cc-app--button {
     font-size: 0.6rem;
     appearance: none;
     border-radius: 5px;
@@ -104,18 +112,23 @@
         background-color $transition--out,
         transform $transition--out;
     cursor: pointer;
-    position: absolute;
-    top: -40px;
-    left: 50%;
-    transform: translateX(-50%);
+    transform: scale(1);
 
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transform: scale(0.9);
+    }
+}
+
+.cc-app--clearAll {
     &:hover,
     &:focus {
         background-color: hsl(var(--red));
-        transform: translateX(-50%);
     }
     &:active {
         background-color: hsl(var(--red));
-        transform: translateX(-50%);
     }
 }

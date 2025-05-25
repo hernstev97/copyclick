@@ -12,6 +12,8 @@ A minimalist React application that lets you paste text and copy it with a singl
 
 - **One-Click Copy**: Paste text into the textarea and click anywhere on it to copy to clipboard
 - **Edit Mode**: Toggle between view and edit modes
+- **Sorting**: Drag and Drop of each textarea enables sorting
+- **Data Sharing** Export and Import of snippets enables users to share their data
 - **Theme Support**: Automatic dark/light mode detection with manual toggle
 - **Persistent User Data**: User preferences and entered text for each textarea is saved in localStorage
 - **Accessibility**: Keyboard navigable and screen reader friendly
@@ -42,6 +44,5 @@ npm run preview
 ## Future Enhancements
 
 - Naming textareas for faster identification between different areas
-- Smoother animations/transitions
 - Multilingual support (English/German)
 - Keyboard shortcuts
