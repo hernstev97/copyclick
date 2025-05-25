@@ -20,5 +20,5 @@ export const getVersionString = () => {
 
     // Format: v0.3.0 (20.05.2024)
     // return `Beta v${version} (${germanDate})`;
-    return `Beta v1.0.0 (${germanDate})`;
+    return `v1.0.0 (${germanDate})`;
 };
