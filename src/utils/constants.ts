@@ -3,7 +3,9 @@ export const CURRENT_DATA_VERSION = '1.0.0'; // Increment this when making break
 
 export const VERSION_MISMATCH_MESSAGE = 'CopyClick has been updated with new features. Your previous snippets have been cleared to ensure compatibility.';
 
-export const THEME_KEY = 'darkMode';   
+export const THEME_KEY = 'darkMode';
+
+export const LANGUAGE_KEY = 'userLanguage';
 
 export const TEXTAREA_BUFFER = 10; // Buffer to prevent scrollbar from appearing
 export const COPY_TOAST_DURATION = 800; // Duration in milliseconds to show the copy success toast

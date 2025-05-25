@@ -1,7 +1,10 @@
 import type { AddItemSkeletonProps } from '../types/props/AddItemSkeletonProps';
 import { motion } from 'motion/react';
+import { INTERFACE_CONTENT } from '../utils/content';
+import { useData } from '../contexts/UserData';
 
 function AddItemSkeleton({ onClick }: AddItemSkeletonProps) {
+    const { language } = useData();
     return (
         <>
             <motion.button className="cc-area cc-area--skeleton" onClick={onClick} layout>
@@ -10,7 +13,7 @@ function AddItemSkeleton({ onClick }: AddItemSkeletonProps) {
                     <div
                         className="cc-area__close-button"
                     >
-                        <span>Close</span>
+                        <span>{INTERFACE_CONTENT[language].delete}</span>
                     </div>
                 </div>
                 <div className="cc-area__textbox cc-area__textbox--edit">

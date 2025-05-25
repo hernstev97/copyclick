@@ -6,7 +6,7 @@ A minimalist React application that lets you paste text and copy it with a singl
 
 ![Preview of copyclick website](screenshot.png 'CopyClick website')
 
-[CopyClick](https://copyclick.netlify.app/) is designed to streamline the copy-paste workflow by providing a simple, accessible interface where text can be pasted once, then copied multiple times with a single click.
+[CopyClick](https://copyclick.hellofrom.sh/) is designed to streamline the copy-paste workflow by providing a simple, accessible interface where text can be pasted once, then copied multiple times with a single click.
 
 ## Features
 
@@ -17,6 +17,7 @@ A minimalist React application that lets you paste text and copy it with a singl
 - **Theme Support**: Automatic dark/light mode detection with manual toggle
 - **Persistent User Data**: User preferences and entered text for each textarea is saved in localStorage
 - **Accessibility**: Keyboard navigable and screen reader friendly
+- **Multilingual support**: Switch between English or German
 
 ## Technology Stack
 
@@ -42,7 +43,5 @@ npm run preview
 ```
 
 ## Future Enhancements
-
 - Naming textareas for faster identification between different areas
-- Multilingual support (English/German)
 - Keyboard shortcuts

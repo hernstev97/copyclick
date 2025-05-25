@@ -2,6 +2,8 @@ import React, { useState, useLayoutEffect, useRef } from 'react';
 import { COPY_TOAST_DURATION, PASTE_TIMEOUT, TEXTAREA_BUFFER } from '../utils/constants';
 import { motion, Reorder } from 'motion/react';
 import type { SnippetDataType } from '../types/SnippetDataType';
+import { INTERFACE_CONTENT } from '../utils/content';
+import { useData } from '../contexts/UserData';
 
 // Component to display a single snippet item
 const CopyClickItem = React.forwardRef<HTMLDivElement, {
@@ -22,7 +24,7 @@ const CopyClickItem = React.forwardRef<HTMLDivElement, {
     transition,
 }, ref) => {
     const { id, title, text, editState } = item;
-
+    const { language } = useData();
     const [copied, setCopied] = useState(false);
     const [copyError, setCopyError] = useState<string | null>(null);
     const [dragging, setDragging] = useState(false);
@@ -104,11 +106,9 @@ const CopyClickItem = React.forwardRef<HTMLDivElement, {
             transition={transition}
             onDragStart={() => {
                 setDragging(true);
-                console.log('drag start');
             }}
             onDragEnd={() => {
                 setDragging(false);
-                console.log('drag end');
             }}
         >
             <motion.div
@@ -126,14 +126,14 @@ const CopyClickItem = React.forwardRef<HTMLDivElement, {
                         onClick={handleRemove}
                         aria-label="Close"
                     >
-                        Close
+                        {INTERFACE_CONTENT[language].delete}
                     </button>
                 </div>
 
                 <p 
                     className={`cc-area__toast ${copied ? 'visible' : ''}`}
                 >
-                    Text copied!
+                    {INTERFACE_CONTENT[language].copied}
                 </p>
 
                 {copyError && (
@@ -174,7 +174,7 @@ const CopyClickItem = React.forwardRef<HTMLDivElement, {
                                 })
                             }
                         />
-                        <span>Edit</span>
+                        <span>{INTERFACE_CONTENT[language].edit}</span>
                     </label>
                     <div
                         className="cc-area__reorder-handle"
@@ -187,7 +187,7 @@ const CopyClickItem = React.forwardRef<HTMLDivElement, {
                         onClick={handleClear}
                         className="cc-area__controls--clear"
                     >
-                        Clear
+                        {INTERFACE_CONTENT[language].clear}
                     </button>
                 </div>
             </motion.div>

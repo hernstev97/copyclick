@@ -10,21 +10,41 @@ import { AnimatePresence, LayoutGroup, motion, Reorder } from 'motion/react';
 import { MOTION_TRANSITION, MOTION_TRANSITION_DURATION } from './utils/constants';
 import ExportDataButton from './components/ExportDataButton';
 import ImportDataButton from './components/ImportDataButton';
+import { CONTENT, INTERFACE_CONTENT, type Language } from './utils/content';
+import { useEffect } from 'react';
+import { LANGUAGE_KEY } from './utils/constants';
+import type { SnippetDataType } from './types/SnippetDataType';
 
 function App() {
     const versionString = getVersionString();
-    const { items, addItem, removeItem, updateItem, reorderItems, clearItems } = useData();
+    const { items, addItem, removeItem, updateItem, reorderItems, clearItems, language, setLanguage } = useData();
+
+    useEffect(() => {
+        const language = localStorage.getItem(LANGUAGE_KEY);
+        if (language) {
+            setLanguage(language as Language);
+        }
+    }, []);
+
+    const handleSetLanguage = () => {
+        const newLanguage = language === 'en' ? 'de' : 'en';
+        setLanguage(newLanguage);
+        localStorage.setItem(LANGUAGE_KEY, newLanguage);
+    };
 
     return (
         <>
             <div className="cc-app">
                 <InfoModal />
-                <ThemeToggle />
+                <div className="cc-app--userconfig">
+                    <button className="cc-button cc-button--language" onClick={() => handleSetLanguage()}>{CONTENT[language].languageSwitchIcon}</button>
+                    <ThemeToggle />
+                </div>  
                 <header>
                     <div>
-                        <h1>copyclick.</h1>
+                        <h1>{CONTENT[language].title}</h1>
                         <h3>
-                            Just paste it for later and copy with one click.
+                            {CONTENT[language].description}
                         </h3>
                     </div>
                 </header>
@@ -46,7 +66,7 @@ function App() {
                                     className="cc-app--clearAll cc-app--button"
                                     onClick={clearItems}
                                 >
-                                    CLEAR ALL
+                                    {INTERFACE_CONTENT[language].clearAll}
                                 </motion.button>
                             )}
                         </AnimatePresence>
@@ -55,7 +75,7 @@ function App() {
                         <Reorder.Group 
                             as="div" 
                             axis="y" 
-                            values={items} 
+                            values={items as SnippetDataType[]} 
                             onReorder={reorderItems} 
                             className="cc-app--items"
                         >    

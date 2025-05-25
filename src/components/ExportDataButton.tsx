@@ -1,9 +1,10 @@
 import { motion } from 'motion/react';
 import { useData } from '../contexts/UserData';
 import { MOTION_TRANSITION_DURATION } from '../utils/constants';
+import { INTERFACE_CONTENT } from '../utils/content';
 
 function ExportDataButton() {
-    const { items } = useData();
+    const { items, language } = useData();
 
     const exportData = () => {
         const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
@@ -24,7 +25,7 @@ function ExportDataButton() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             transition={{ duration: MOTION_TRANSITION_DURATION }}
-        >Export Data</motion.button>
+        >{INTERFACE_CONTENT[language].exportData}</motion.button>
     );
 }
 

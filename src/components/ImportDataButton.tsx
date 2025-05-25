@@ -2,9 +2,10 @@ import { motion } from 'motion/react';
 import { useData } from '../contexts/UserData';
 import type { SnippetDataType } from '../types/SnippetDataType';
 import { MOTION_TRANSITION_DURATION } from '../utils/constants';
+import { INTERFACE_CONTENT } from '../utils/content';
 
 function ImportDataButton() {
-    const { addItem } = useData();
+    const { addItem, language } = useData();
 
     const importData = () => {
         const fileInput = document.createElement('input');
@@ -32,7 +33,7 @@ function ImportDataButton() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             transition={{ duration: MOTION_TRANSITION_DURATION }}
-        >Import Data</motion.button>
+        >{INTERFACE_CONTENT[language].importData}</motion.button>
     );
 }
 
