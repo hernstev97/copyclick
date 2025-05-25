@@ -15,6 +15,24 @@ $gradient-bg-effect-main-reverse: var(--main-gradient-reverse) border-box;
     border-radius: 10px;
     width: 100%;
     max-width: 666px;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 25px 0 hsl(var(--black), 0);
+    transform: scale(1);
+    transition: box-shadow $transition--out;
+
+    &--dragging {
+        box-shadow: 0 0 25px 0 hsl(var(--black), .5);
+        max-width: 700px;
+        z-index: 2;
+    }
+
+    &__content {
+        width: 100%;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
 
     &__title-wrapper {
         display: flex;
@@ -34,6 +52,16 @@ $gradient-bg-effect-main-reverse: var(--main-gradient-reverse) border-box;
             border-radius: 5px;
             margin-bottom: 0.5rem;
         }
+    }
+
+    &__reorder-handle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);   
+        cursor: grab;
+        width: 25px;
+        color: hsl(var(--white), 0.222);
     }
 
     &__textbox {
@@ -83,6 +111,7 @@ $gradient-bg-effect-main-reverse: var(--main-gradient-reverse) border-box;
     }
 
     &__controls {
+        position: relative;
         width: 100%;
         max-width: 666px;
         display: flex;

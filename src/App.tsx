@@ -6,10 +6,12 @@ import AddItemSkeleton from './components/AddItemSkeleton';
 import ThemeToggle from './components/ThemeToggle';
 import { useData } from './contexts/UserData';
 import InfoModal from './components/InfoModal';
+import { AnimatePresence, LayoutGroup, motion, Reorder } from 'motion/react';
+import { MOTION_TRANSITION, MOTION_TRANSITION_DURATION } from './utils/constants';
 
 function App() {
     const versionString = getVersionString();
-    const { items, addItem, removeItem, updateItem, clearItems } = useData();
+    const { items, addItem, removeItem, updateItem, reorderItems, clearItems } = useData();
 
     return (
         <>
@@ -25,35 +27,54 @@ function App() {
                     </div>
                 </header>
                 <main>
-                    {items.length > 0 && (
-                        <button
-                            className="cc-app--clearAll"
-                            onClick={clearItems}
-                        >
-                            CLEAR ALL
-                        </button>
-                    )}
+                    <AnimatePresence>
+                        {items.length > 0 && (
+                            <motion.button
+                                initial={{ scale: 0, x: '-50%' }}
+                                animate={{ scale: 1, x: '-50%' }}
+                                exit={{ scale: 0, x: '-50%' }}
+                                transition={{ duration: MOTION_TRANSITION_DURATION }}
+                                className="cc-app--clearAll"
+                                onClick={clearItems}
+                            >
+                                CLEAR ALL
+                            </motion.button>
+                        )}
+                    </AnimatePresence>
 
-                    {items.map((item) => (
-                        <CopyClickItem
-                            key={item.id}
-                            id={item.id}
-                            title={item.title}
-                            text={item.text}
-                            editState={item.editState}
-                            onRemove={removeItem}
-                            onUpdate={updateItem}
+                    <LayoutGroup>
+                        <Reorder.Group 
+                            as="div" 
+                            axis="y" 
+                            values={items} 
+                            onReorder={reorderItems} 
+                            className="cc-app--items"
+                        >    
+                            <AnimatePresence mode="popLayout">
+                                {items.map((item) => (
+                                    <CopyClickItem
+                                        key={item.id}
+                                        item={item}
+                                        onRemove={removeItem}
+                                        onUpdateContents={updateItem}
+                                        initial={{ scaleY: 0, opacity: 0, transformOrigin: 'top' }}
+                                        animate={{ scaleY: 1, opacity: 1, transformOrigin: 'top' }}
+                                        exit={{ scaleY: 0, opacity: 0, transformOrigin: 'top' }}
+                                        transition={MOTION_TRANSITION}
+                                    />
+                                ))}
+                            </AnimatePresence>
+                        </Reorder.Group>
+                        <AddItemSkeleton onClick={() => addItem({
+                                id: uuidv4(),
+                                title: `Snippet ${items.length + 1}`,
+                                text: '',
+                                editState: true,
+                            })}
                         />
-                    ))}
-                    <AddItemSkeleton onClick={() => addItem({
-                            id: uuidv4(),
-                            title: `Snippet ${items.length + 1}`,
-                            text: '',
-                            editState: true,
-                        })
-                    }
-                />
+                    </LayoutGroup>
                 </main>
+                <footer>
                 <p
                     className="cc-app--footer cc-app--footer__left"
                 >
@@ -62,8 +83,9 @@ function App() {
                 <p
                     className="cc-app--footer cc-app--footer__right"
                 >
-                    {versionString}
-                </p>
+                        {versionString}
+                    </p>
+                </footer>
             </div>
         </>
     );

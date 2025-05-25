@@ -5,5 +5,6 @@ export type UserDataContextType = {
     addItem: (item: SnippetDataType) => void;
     removeItem: (id: string) => void;
     updateItem: (item: SnippetDataType) => void;
+    reorderItems: (newOrder: SnippetDataType[]) => void;
     clearItems: () => void;
 };

@@ -89,13 +89,17 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({
         );
     };
 
+    const reorderItems = (newOrder: SnippetDataType[]) => {
+        setItems(newOrder);
+    };
+
     const clearItems = () => {
         setItems([]);
     };
 
     return (
         <UserDataContext.Provider
-            value={{ items, addItem, removeItem, updateItem, clearItems }}
+            value={{ items, addItem, removeItem, updateItem, reorderItems, clearItems }}
         >
             {children}
         </UserDataContext.Provider>

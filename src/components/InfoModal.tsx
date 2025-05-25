@@ -1,4 +1,6 @@
+import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
+import { MOTION_TRANSITION_DURATION } from '../utils/constants';
 
 function InfoModal() {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,11 +14,16 @@ function InfoModal() {
                 Information
             </button>
 
+            <AnimatePresence> 
             {isOpen && (
-                <div className="cc-modal--overlay" onClick={handleClose}>
-                    <div
+                <motion.div layout className="cc-modal--overlay" onClick={handleClose} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: MOTION_TRANSITION_DURATION, ease: "easeInOut" }}>
+                    <motion.div
                         className="cc-modal--content"
                         onClick={(e) => e.stopPropagation()}
+                        initial={{ scale: 0, x: '-50%', y: '-50%' }}
+                        animate={{ scale: 1, x: '-50%', y: '-50%' }}
+                        exit={{ scale: 0, x: '-50%', y: '-50%' }}
+                        transition={{ duration: MOTION_TRANSITION_DURATION, ease: "easeInOut" }}
                     >
                         <h2>Über CopyClick & Datenhandhabung</h2>
                         <h3>Was ist CopyClick?</h3>
@@ -73,9 +80,10 @@ function InfoModal() {
                         <button className="cc-button" onClick={handleClose}>
                             Close
                         </button>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             )}
+            </AnimatePresence>
         </div>
     );
 }

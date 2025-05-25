@@ -1,19 +1,17 @@
 import type { AddItemSkeletonProps } from '../types/props/AddItemSkeletonProps';
+import { motion } from 'motion/react';
 
 function AddItemSkeleton({ onClick }: AddItemSkeletonProps) {
     return (
         <>
-            <button className="cc-area cc-area--skeleton" onClick={onClick}>
+            <motion.button className="cc-area cc-area--skeleton" onClick={onClick} layout>
                 <div className="cc-area__title-wrapper">
                     <div className="cc-area__title-skeleton"></div>
-                    <button
+                    <div
                         className="cc-area__close-button"
-                        type="button"
-                        title="Remove"
-                        aria-label="Close"
                     >
                         <span>Close</span>
-                    </button>
+                    </div>
                 </div>
                 <div className="cc-area__textbox cc-area__textbox--edit">
                     {/* Updated SVG that works with fill */}
@@ -35,7 +33,7 @@ function AddItemSkeleton({ onClick }: AddItemSkeletonProps) {
                         <span>Clear</span>
                     </div>
                 </div>
-            </button>
+            </motion.button>
         </>
     );
 }

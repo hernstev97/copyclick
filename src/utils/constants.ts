@@ -8,3 +8,12 @@ export const THEME_KEY = 'darkMode';
 export const TEXTAREA_BUFFER = 10; // Buffer to prevent scrollbar from appearing
 export const COPY_TOAST_DURATION = 800; // Duration in milliseconds to show the copy success toast
 export const PASTE_TIMEOUT = 0; // Immediate execution for paste handling
+
+export const MOTION_TRANSITION_DURATION = 0.3;
+export const MOTION_TRANSITION = {
+    type: "spring",
+    stiffness: 200,
+    damping: 25,
+    mass: 0.5,
+    duration: MOTION_TRANSITION_DURATION
+};
