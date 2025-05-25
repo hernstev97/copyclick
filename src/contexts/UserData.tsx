@@ -3,7 +3,8 @@ import { useState, useEffect, useContext } from 'react';
 import DOMPurify from 'dompurify';
 import type { SnippetDataType } from '../types/SnippetDataType';
 import type { UserDataContextType } from '../types/context/UserDataContextType';
-import { CURRENT_DATA_VERSION, STORAGE_KEY, VERSION_MISMATCH_MESSAGE } from '../utils/constants';
+import { CURRENT_DATA_VERSION, LANGUAGE_KEY, STORAGE_KEY, VERSION_MISMATCH_MESSAGE } from '../utils/constants';
+import type { Language } from '../utils/content';
 
 // Configure DOMPurify to be more permissive with HTML but still safe
 const sanitizeInput = (input: string): string => {
@@ -24,6 +25,7 @@ const UserDataContext = React.createContext<UserDataContextType | undefined>(
 export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
+    const [language, setLanguage] = useState<Language>('en');
     const [items, setItems] = useState<SnippetDataType[]>(() => {
         const storedData = localStorage.getItem(STORAGE_KEY);
 
@@ -89,13 +91,31 @@ export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({
         );
     };
 
+    const reorderItems = (newOrder: ReadonlyArray<SnippetDataType>) => {
+        setItems(newOrder as SnippetDataType[]);
+    };
+
     const clearItems = () => {
         setItems([]);
     };
 
+    const handleSetLanguage = (language: Language) => {
+        localStorage.setItem(LANGUAGE_KEY, language);
+        setLanguage(language);
+    };
+
     return (
         <UserDataContext.Provider
-            value={{ items, addItem, removeItem, updateItem, clearItems }}
+            value={{
+                language,
+                setLanguage: handleSetLanguage,
+                items,
+                addItem,
+                removeItem,
+                updateItem,
+                reorderItems,
+                clearItems
+            }}
         >
             {children}
         </UserDataContext.Provider>

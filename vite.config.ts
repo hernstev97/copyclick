@@ -10,7 +10,7 @@ export default defineConfig({
             new Date().toISOString()
         ),
         'import.meta.env.VITE_APP_VERSION': JSON.stringify(
-            process.env.npm_package_version || '0.3'
+            process.env.npm_package_version
         ),
     },
 });

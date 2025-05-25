@@ -1,8 +1,10 @@
 import { useTheme } from '../contexts/ThemeContext';
+import { INTERFACE_CONTENT } from '../utils/content';
+import { useData } from '../contexts/UserData';
 
 const ThemeToggle = () => {
     const { darkMode, toggleDarkMode } = useTheme();
-
+    const { language } = useData();
     return (
         <button
             className="cc-button dark-mode-toggle"
@@ -11,7 +13,7 @@ const ThemeToggle = () => {
                 darkMode ? 'Switch to light mode' : 'Switch to dark mode'
             }
         >
-            Change Theme {darkMode ? '☀️' : '🌙'}
+            {INTERFACE_CONTENT[language].theme} {darkMode ? '☀️' : '🌙'}
         </button>
     );
 };
