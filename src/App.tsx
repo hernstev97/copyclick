@@ -14,7 +14,6 @@ import { CONTENT, INTERFACE_CONTENT, type Language } from './utils/content';
 import { useEffect } from 'react';
 import { LANGUAGE_KEY } from './utils/constants';
 import type { SnippetDataType } from './types/SnippetDataType';
-import { Analytics } from "@vercel/analytics/react"
 
 function App() {
     const versionString = getVersionString();
@@ -35,7 +34,6 @@ function App() {
 
     return (
         <>
-            <Analytics/>
             <div className="cc-app">
                 <InfoModal />
                 <div className="cc-app--userconfig">
