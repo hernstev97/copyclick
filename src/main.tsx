@@ -13,8 +13,8 @@ createRoot(document.getElementById('root')!).render(
                 <App />
             </ThemeProvider>
         </UserDataProvider>
-        <Analytics mode="production" />
-        <SpeedInsights />
+        <Analytics mode="production" />;
+        <SpeedInsights />;
     </StrictMode>
 );
 
