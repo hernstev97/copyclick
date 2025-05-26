@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')!).render(
                 <App />
             </ThemeProvider>
         </UserDataProvider>
-        <Analytics />
+        <Analytics mode="production" />;
     </StrictMode>
 );
 
