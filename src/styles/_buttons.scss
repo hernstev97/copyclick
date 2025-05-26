@@ -115,6 +115,7 @@
         background-color $transition--out,
         transform $transition--out;
     cursor: pointer;
+    color: hsl(var(--white));
 
     &:hover {
         background-color: hsl(var(--pink));
