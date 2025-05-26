@@ -19,7 +19,8 @@ $gradient-bg-effect-main-reverse: var(--main-gradient-reverse) border-box;
     box-shadow: 0 0 25px 0 hsl(var(--black), 0);
     transform: scale(1);
     transition: box-shadow $transition--out;
-
+    color: hsl(var(--white));
+    
     &--dragging {
         box-shadow: 0 0 25px 0 hsl(var(--black), .5);
         max-width: 700px;
