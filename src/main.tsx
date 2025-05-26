@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import App from './App.tsx';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { UserDataProvider } from './contexts/UserData';
@@ -12,7 +13,8 @@ createRoot(document.getElementById('root')!).render(
                 <App />
             </ThemeProvider>
         </UserDataProvider>
-        <Analytics mode="production" />;
+        <Analytics mode="production" />
+        <SpeedInsights />
     </StrictMode>
 );
 
