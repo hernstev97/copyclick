@@ -10,9 +10,9 @@ createRoot(document.getElementById('root')!).render(
         <UserDataProvider>
             <ThemeProvider>
                 <App />
-                <Analytics />
             </ThemeProvider>
         </UserDataProvider>
+        <Analytics />
     </StrictMode>
 );
 
