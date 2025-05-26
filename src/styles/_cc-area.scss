@@ -1,4 +1,4 @@
-$transition-duration: 0.4s;
+$transition-duration: 0.3s;
 $transition--in: $transition-duration ease-in;
 $transition--out: $transition-duration ease-out;
 
@@ -20,11 +20,32 @@ $gradient-bg-effect-main-reverse: var(--main-gradient-reverse) border-box;
     transform: scale(1);
     transition: box-shadow $transition--out;
     color: hsl(var(--white));
+    user-select: none;
+
+    &__reorder-handle {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);   
+        cursor: grab;
+        width: calc(25px + 2rem);
+        padding: 1rem;
+        color: hsl(var(--white), 0.222);
+
+        &:active {
+            cursor: grabbing;
+        }
+    }
     
     &--dragging {
         box-shadow: 0 0 25px 0 hsl(var(--black), .5);
         max-width: 700px;
         z-index: 2;
+        cursor: grabbing;
+
+        .cc-area__reorder-handle {
+            cursor: grabbing;
+        }
     }
 
     &__content {
@@ -55,16 +76,6 @@ $gradient-bg-effect-main-reverse: var(--main-gradient-reverse) border-box;
         }
     }
 
-    &__reorder-handle {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);   
-        cursor: grab;
-        width: 25px;
-        color: hsl(var(--white), 0.222);
-    }
-
     &__textbox {
         appearance: none;
         border: 3px solid transparent;
@@ -85,29 +96,19 @@ $gradient-bg-effect-main-reverse: var(--main-gradient-reverse) border-box;
         overflow: hidden;
         color: hsl(var(--white));
 
-        &:active,
-        &:hover {
-            border: 5px solid transparent;
-            background:
-                $gradient-bg-effect-jet,
-                $gradient-bg-effect-main-reverse;
-        }
-
         &--copy {
             cursor: pointer;
-            transition: opacity $transition--out;
+            transition: box-shadow $transition--out;
+            box-shadow: 0 0 7px hsl(var(--pink), 0);
             border: 3px solid transparent;
             border-radius: 10px;
             background:
                 $gradient-bg-effect-night,
                 $gradient-bg-effect-main;
 
-            &:hover {
-                transition: opacity $transition--in;
-                border: 5px solid transparent;
-                background:
-                    $gradient-bg-effect-night,
-                    $gradient-bg-effect-main-reverse;
+            &:hover, &:focus {
+                transition: box-shadow $transition--in;
+                box-shadow: 0 0 7px hsl(var(--pink), 1);
             }
         }
     }
