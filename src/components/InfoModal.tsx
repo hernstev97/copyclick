@@ -30,7 +30,7 @@ function InfoModal() {
                     >
                         <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(CONTENT[language].dataHandling.modalContent.html) }} />
                         <h3>Version</h3>
-                        <p>1.0.0</p>
+                        <p>1.0.1</p>
                         <h3>Build Date</h3>
                         <p>{import.meta.env.VITE_BUILD_DATE}</p>
                         <button className="cc-button" onClick={handleClose}>

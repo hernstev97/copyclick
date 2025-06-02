@@ -32,7 +32,8 @@ export const CONTENT = {
                                 <b>Browser-Specific and User-Controlled: </b>
                                 The data saved is specific to the web browser and user profile you are using on your computer. This means snippets saved in one browser (e.g., Chrome) will not be accessible in another (e.g., Firefox) or on different devices. You have control over this data; clearing your browser's site data for this application will permanently delete all your stored CopyClick snippets.
                             </li>
-                        </ul>`,
+                        </ul>
+                        <p>Contact: <a href="mailto:contact@hellofrom.sh">contact@hellofrom.sh</a></p>`,
             }
         }
     },
@@ -91,7 +92,9 @@ export const CONTENT = {
                                 Seite gelöscht, sind auch alle mit CopyClick
                                 gespeicherten Texte dauerhaft entfernt.
                             </li>
-                        </ul>`,
+                        </ul>
+                        <p>Kontakt: <a href="mailto:contact@hellofrom.sh">contact@hellofrom.sh</a></p>
+                        `,
             }
         }
     }
