@@ -1,8 +1,8 @@
 // Main stylesheet that imports all partials
-@import 'variables';
-@import 'base';
-@import 'layout';
-@import 'cc-area';
-@import 'buttons';
-@import 'modal';
-@import 'animations';
+@use 'variables';
+@use 'base';
+@use 'layout';
+@use 'cc-area';
+@use 'buttons';
+@use 'modal';
+@use 'animations';

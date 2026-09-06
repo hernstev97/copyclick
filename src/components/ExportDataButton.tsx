@@ -1,5 +1,6 @@
+import { downloadJson, serializeSnippets } from '../utils/data';
 import { motion } from 'motion/react';
-import { useData } from '../contexts/UserData';
+import { useData } from '../hooks/useData';
 import { MOTION_TRANSITION_DURATION } from '../utils/constants';
 import { INTERFACE_CONTENT } from '../utils/content';
 
@@ -7,14 +8,7 @@ function ExportDataButton() {
     const { items, language } = useData();
 
     const exportData = () => {
-        const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-          JSON.stringify(items)
-        )}`;
-        const link = document.createElement("a");
-        link.href = jsonString;
-        link.download = "data.json";
-    
-        link.click();
+        downloadJson(serializeSnippets(items), 'copyclick.json');
     };
 
     return (
@@ -25,7 +19,9 @@ function ExportDataButton() {
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             transition={{ duration: MOTION_TRANSITION_DURATION }}
-        >{INTERFACE_CONTENT[language].exportData}</motion.button>
+        >
+            {INTERFACE_CONTENT[language].exportData}
+        </motion.button>
     );
 }
 

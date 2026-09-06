@@ -1,124 +1,94 @@
 export type Language = 'en' | 'de';
 
 export const CONTENT = {
-    "en": {
-        "languageSwitchIcon": "🇩🇪",
-        "title": "copyclick.",
-        "description": "Just paste it for later and copy with one click.",
-        "dataHandling": {
-            "modalButton": "Information",
-            "modalContent": {
-                "close": "Close",
-                "html": `<h2>About CopyClick & Data Handling</h2>
-                        <h3>What is CopyClick?</h3>
-                        <p>
-                            CopyClick is a browser-based utility designed to help you efficiently save, manage, and quickly copy frequently used text snippets. It allows users to create, edit, and organize pieces of text for easy retrieval and use, directly within their web browser.
-                        </p>
-                        <h3>How Your Data is Handled:</h3>
-                        <p>
-                            We prioritize straightforward and secure data management. Please review the following key points regarding how CopyClick handles your information:
-                        </p>
-                        <ul>
-                            <li>
-                                <b>Local Storage Only: </b>All text snippets and any associated details (like item names or edit states) that you create and save within the CopyClick application are stored exclusively in your web browser's local storage (localStorage).
-                            </li>
-                            <li>
-                                <b>No Server Interaction for Data Storage: </b>Your data, including the content of your text snippets, is not transmitted to, stored on, or processed by any external servers or cloud services. All data operations for storing and managing your snippets occur locally on your computer, within your browser.
-                            </li>
-                            <li>
-                                <b>Data Content: </b>The application stores the text you input for your snippets, an internal identifier for each item, and its current status (e.g., whether it's in an editable state).
-                            </li>
-                            <li>
-                                <b>Browser-Specific and User-Controlled: </b>
-                                The data saved is specific to the web browser and user profile you are using on your computer. This means snippets saved in one browser (e.g., Chrome) will not be accessible in another (e.g., Firefox) or on different devices. You have control over this data; clearing your browser's site data for this application will permanently delete all your stored CopyClick snippets.
-                            </li>
-                        </ul>
-                        <p>Contact: <a href="mailto:contact@hellofrom.sh">contact@hellofrom.sh</a></p>`,
-            }
-        }
+    en: {
+        languageSwitchIcon: '🇩🇪',
+        title: 'copyclick.',
+        description: 'Just paste it for later and copy with one click.',
+        dataHandling: {
+            modalButton: 'Information',
+            modalContent: {
+                close: 'Close',
+            },
+        },
     },
-    "de": {
-        "languageSwitchIcon": "🇬🇧",
-        "title": "copyclick.",
-        "description": "Einfach einen Text einfügen und mit einem Klick kopieren.",
-        "dataHandling": {
-            "modalButton": "Information",
-            "modalContent": {
-                "close": "Schließen",
-                "html": `<h2>Über CopyClick & Datenhandhabung</h2>
-                        <h3>Was ist CopyClick?</h3>
-                        <p>
-                            CopyClick ist eine kleine WebApp, die dabei hilft,
-                            Textsnippets, die man oft braucht, einfach zu
-                            zwischenzuspeichern, zu bearbeiten und schnell zu
-                            kopieren. Je nach Workflow kann dies den
-                            Arbeitsablauf erheblich verbessern.
-                        </p>
-                        <h3>Wie Daten gehandhabt werden</h3>
-                        <p>
-                            Die Datenhandhabung ist einfach und sicher gehalten.
-                            Hier die wichtigsten Punkte dazu:
-                        </p>
-                        <ul>
-                            <li>
-                                <b>Ausschließlich lokale Speicherung: </b>Alle
-                                Daten (wie Textinhalt, Bearbeitungsstatus oder
-                                Präferenz zum Dark-/Lightmodus), die mit
-                                CopyClick erstellt und gespeichert werden,
-                                landen ausschließlich im lokalen Speicher des
-                                Webbrowsers (genannt localStorage).
-                            </li>
-                            <li>
-                                <b>Keine Datenübertragung an Server: </b>Die
-                                gespeicherten Daten werden nicht an Server
-                                übermittelt. Jegliche Verarbeitung findet lokal
-                                statt.
-                            </li>
-                            <li>
-                                <b>Was wird gespeichert?: </b>Gespeichert wird
-                                der Text selbst, eine ID für jedes Element und
-                                der aktuelle Zustand (z.B. ob er gerade
-                                bearbeitet werden kann). Außerdem wird die
-                                Präferenz für den Dark-/Lightmodus gespeichert.
-                            </li>
-                            <li>
-                                <b>Browserabhängig und nutzerkontrolliert: </b>
-                                Die gespeicherten Texte sind an den jeweiligen
-                                Browser auf dem Computer gebunden. Das heißt,
-                                Texte, die z.B. in Chrome gespeichert wurden,
-                                sind nicht in Firefox oder auf anderen Geräten
-                                verfügbar. Die Kontrolle über diese Daten liegt
-                                beim Nutzer. Werden die Browserdaten für diese
-                                Seite gelöscht, sind auch alle mit CopyClick
-                                gespeicherten Texte dauerhaft entfernt.
-                            </li>
-                        </ul>
-                        <p>Kontakt: <a href="mailto:contact@hellofrom.sh">contact@hellofrom.sh</a></p>
-                        `,
-            }
-        }
-    }
-}
+    de: {
+        languageSwitchIcon: '🇬🇧',
+        title: 'copyclick.',
+        description:
+            'Einfach einen Text einfügen und mit einem Klick kopieren.',
+        dataHandling: {
+            modalButton: 'Information',
+            modalContent: {
+                close: 'Schließen',
+            },
+        },
+    },
+};
 
 export const INTERFACE_CONTENT = {
-    "en": {
-        "exportData": "EXPORT",
-        "importData": "IMPORT",
-        "clearAll": "CLEAR ALL",
-        "edit": "Edit",
-        "clear": "Clear",
-        "delete": "Close",
-        "copied": "Text copied!",
-        "theme": "Change Theme",
+    en: {
+        exportData: 'EXPORT',
+        importData: 'IMPORT',
+        clearAll: 'CLEAR ALL',
+        edit: 'Edit',
+        clear: 'Clear',
+        delete: 'Close',
+        copied: 'Text copied!',
+        theme: 'Change Theme',
+        add: 'Add snippet',
+        paste: 'Paste text here...',
+        copyLabel: 'Copy snippet',
+        copyError:
+            'Copy failed. Select the text and copy it manually, or check clipboard permissions.',
+        reorder: 'Reorder snippet',
+        reorderHelp:
+            'Press Enter or Space to start reordering, Arrow Up or Arrow Down to move, then Enter, Space or Escape to finish. Moving focus away also finishes reordering.',
+        importError:
+            'Import failed. Choose valid CopyClick JSON (up to 10 MiB / 1000 snippets). Nothing was imported.',
+        recoverData: 'Download stored backup',
+        retryStorage: 'Save current snippets instead',
+        replaceStoredConfirm:
+            'Replace the existing browser data with the snippets currently shown? Download any backup you need first.',
+        storageErrors: {
+            invalid:
+                'The saved data could not be read. The original remains untouched. Changes are only kept for this session; export them before closing.',
+            unavailable:
+                'Browser storage is unavailable or full. Changes are only kept for this session; export them before closing.',
+            conflict:
+                'Another tab changed the saved data. Your current edits are only kept in this tab. Export them, then reload to load the other tab’s data.',
+        },
     },
-    "de": {
-        "exportData": "EXPORTIEREN",
-        "importData": "IMPORTIEREN",
-        "clearAll": "ALLE LÖSCHEN",
-        "edit": "Bearbeiten",
-        "clear": "Leeren",
-        "delete": "Schließen",
-        "copied": "Text kopiert!",
-        "theme": "Theme ändern",
-    }
-}
+    de: {
+        exportData: 'EXPORTIEREN',
+        importData: 'IMPORTIEREN',
+        clearAll: 'ALLE LÖSCHEN',
+        edit: 'Bearbeiten',
+        clear: 'Leeren',
+        delete: 'Schließen',
+        copied: 'Text kopiert!',
+        theme: 'Theme ändern',
+        add: 'Snippet hinzufügen',
+        paste: 'Text hier einfügen...',
+        copyLabel: 'Snippet kopieren',
+        copyError:
+            'Kopieren fehlgeschlagen. Text markieren und manuell kopieren oder die Zwischenablage-Berechtigung prüfen.',
+        reorder: 'Snippet verschieben',
+        reorderHelp:
+            'Mit Enter oder Leertaste das Verschieben starten, mit Pfeil hoch oder runter bewegen und mit Enter, Leertaste oder Escape beenden. Auch ein Fokuswechsel beendet das Verschieben.',
+        importError:
+            'Import fehlgeschlagen. Gültige CopyClick-JSON wählen (bis 10 MiB / 1000 Snippets). Es wurde nichts importiert.',
+        recoverData: 'Gespeicherte Sicherung herunterladen',
+        retryStorage: 'Stattdessen aktuelle Snippets speichern',
+        replaceStoredConfirm:
+            'Vorhandene Browserdaten durch die aktuell angezeigten Snippets ersetzen? Benötigte Sicherungen vorher herunterladen.',
+        storageErrors: {
+            invalid:
+                'Die gespeicherten Daten konnten nicht gelesen werden und bleiben unverändert. Änderungen gelten nur für diese Sitzung; vor dem Schließen exportieren.',
+            unavailable:
+                'Der Browserspeicher ist nicht verfügbar oder voll. Änderungen gelten nur für diese Sitzung; vor dem Schließen exportieren.',
+            conflict:
+                'Ein anderer Tab hat die gespeicherten Daten geändert. Deine aktuellen Änderungen gelten nur in diesem Tab. Exportiere sie und lade dann neu, um die Daten des anderen Tabs zu laden.',
+        },
+    },
+};

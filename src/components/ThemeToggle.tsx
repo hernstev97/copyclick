@@ -1,6 +1,6 @@
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from '../hooks/useTheme';
 import { INTERFACE_CONTENT } from '../utils/content';
-import { useData } from '../contexts/UserData';
+import { useData } from '../hooks/useData';
 
 const ThemeToggle = () => {
     const { darkMode, toggleDarkMode } = useTheme();
