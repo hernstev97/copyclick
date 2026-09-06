@@ -1,132 +1,87 @@
-import React from 'react';
-import { useState, useEffect, useContext } from 'react';
-import DOMPurify from 'dompurify';
+import { useState, useRef, useEffect, type ReactNode } from 'react';
 import type { SnippetDataType } from '../types/SnippetDataType';
-import type { UserDataContextType } from '../types/context/UserDataContextType';
-import { CURRENT_DATA_VERSION, LANGUAGE_KEY, STORAGE_KEY, VERSION_MISMATCH_MESSAGE } from '../utils/constants';
+import { LANGUAGE_KEY } from '../utils/constants';
 import type { Language } from '../utils/content';
+import { UserDataContext } from '../hooks/useData';
+import {
+    loadData,
+    saveData,
+    readPreference,
+    writePreference,
+} from '../utils/storage';
 
-// Configure DOMPurify to be more permissive with HTML but still safe
-const sanitizeInput = (input: string): string => {
-    return DOMPurify.sanitize(input, {
-        ALLOWED_TAGS: [
-            'a', 'b', 'blockquote', 'code', 'em', 'i', 'li', 'ol', 'strong', 'ul',
-            'p', 'br', 'div', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-            'table', 'thead', 'tbody', 'tr', 'th', 'td'
-        ],
-        ALLOWED_ATTR: ['href', 'target', 'rel', 'class', 'id', 'style']
-    });
-};
-
-const UserDataContext = React.createContext<UserDataContextType | undefined>(
-    undefined
-);
-
-export const UserDataProvider: React.FC<{ children: React.ReactNode }> = ({
-    children,
-}) => {
-    const [language, setLanguage] = useState<Language>('en');
-    const [items, setItems] = useState<SnippetDataType[]>(() => {
-        const storedData = localStorage.getItem(STORAGE_KEY);
-
-        if (storedData) {
-            try {
-                const parsedData = JSON.parse(storedData);
-                
-                // Check if we have the new format with version
-                if (parsedData.version === CURRENT_DATA_VERSION) {
-                    // Sanitize stored data when loading
-                    return parsedData.items.map((item: SnippetDataType) => ({
-                        ...item,
-                        title: sanitizeInput(item.title),
-                        text: sanitizeInput(item.text)
-                    }));
-                }
-
-                // If we have old data, clear it and show a notification
-                localStorage.removeItem(STORAGE_KEY);
-                alert(VERSION_MISMATCH_MESSAGE);
-                return [];
-            } catch (error) {
-                console.error('Failed to parse items from localStorage:', error);
-                return [];
-            }
-        }
-        return [];
-    });
+export function UserDataProvider({ children }: { children: ReactNode }) {
+    const [language, setLanguage] = useState<Language>(() =>
+        readPreference(LANGUAGE_KEY) === 'de' ? 'de' : 'en'
+    );
+    const [data, setData] = useState(loadData);
+    const current = useRef(data);
 
     useEffect(() => {
-        // Store data with version
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({
-            version: CURRENT_DATA_VERSION,
-            items
-        }));
-    }, [items]);
+        document.documentElement.lang = language;
+    }, [language]);
 
-    const addItem = (item: SnippetDataType) => {
-        // Sanitize input before adding
-        const sanitizedItem = {
-            ...item,
-            title: sanitizeInput(item.title),
-            text: sanitizeInput(item.text)
-        };
-        setItems((items) => [...items, sanitizedItem]);
-    };
-
-    const removeItem = (id: string) => {
-        setItems((items) => items.filter((item) => item.id !== id));
-    };
-
-    const updateItem = (item: SnippetDataType) => {
-        // Sanitize input before updating
-        const sanitizedItem = {
-            ...item,
-            title: sanitizeInput(item.title),
-            text: sanitizeInput(item.text)
-        };
-        setItems((items) =>
-            items.map((existingItem) =>
-                existingItem.id === sanitizedItem.id ? sanitizedItem : existingItem
-            )
+    // Persistence happens on user actions, never inside a state updater or mount effect.
+    const change = (
+        update: (items: SnippetDataType[]) => SnippetDataType[],
+        replace = false
+    ) => {
+        const next = saveData(
+            current.current,
+            update(current.current.items),
+            replace
         );
-    };
-
-    const reorderItems = (newOrder: ReadonlyArray<SnippetDataType>) => {
-        setItems(newOrder as SnippetDataType[]);
-    };
-
-    const clearItems = () => {
-        setItems([]);
-    };
-
-    const handleSetLanguage = (language: Language) => {
-        localStorage.setItem(LANGUAGE_KEY, language);
-        setLanguage(language);
+        current.current = next;
+        setData(next);
     };
 
     return (
         <UserDataContext.Provider
             value={{
                 language,
-                setLanguage: handleSetLanguage,
-                items,
-                addItem,
-                removeItem,
-                updateItem,
-                reorderItems,
-                clearItems
+                setLanguage: (value) => {
+                    writePreference(LANGUAGE_KEY, value);
+                    setLanguage(value);
+                },
+                items: data.items,
+                storageStatus: data.status,
+                storedBackup: data.raw,
+                replaceStoredData: () => change((items) => items, true),
+                addItem: (item) => change((items) => [...items, item]),
+                importItems: (imported) =>
+                    change((items) => [
+                        ...items,
+                        ...imported.map((item) => ({
+                            ...item,
+                            id: crypto.randomUUID(),
+                        })),
+                    ]),
+                removeItem: (id) =>
+                    change((items) => items.filter((item) => item.id !== id)),
+                updateItem: (item) =>
+                    change((items) =>
+                        items.map((existing) =>
+                            existing.id === item.id ? item : existing
+                        )
+                    ),
+                reorderItems: (items) => change(() => [...items]),
+                moveItem: (id, direction) =>
+                    change((items) => {
+                        const index = items.findIndex((item) => item.id === id);
+                        const target = index + direction;
+                        if (index < 0 || target < 0 || target >= items.length)
+                            return items;
+                        const reordered = [...items];
+                        [reordered[index], reordered[target]] = [
+                            reordered[target],
+                            reordered[index],
+                        ];
+                        return reordered;
+                    }),
+                clearItems: () => change(() => []),
             }}
         >
             {children}
         </UserDataContext.Provider>
     );
-};
-
-// Custom hook to use the user data context
-export const useData = () => {
-    const context = useContext(UserDataContext);
-    if (context === undefined) {
-        throw new Error('useData must be used within a UserDataProvider');
-    }
-    return context;
-};
+}

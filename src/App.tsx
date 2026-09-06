@@ -1,68 +1,75 @@
 import './styles/main.scss';
 import { getVersionString } from './utils/version';
 import CopyClickItem from './components/CopyClickItem';
-import { v4 as uuidv4 } from 'uuid';
 import AddItemSkeleton from './components/AddItemSkeleton';
 import ThemeToggle from './components/ThemeToggle';
-import { useData } from './contexts/UserData';
+import { useData } from './hooks/useData';
+import StorageNotice from './components/StorageNotice';
 import InfoModal from './components/InfoModal';
 import { AnimatePresence, LayoutGroup, motion, Reorder } from 'motion/react';
-import { MOTION_TRANSITION, MOTION_TRANSITION_DURATION } from './utils/constants';
+import {
+    MOTION_TRANSITION,
+    MOTION_TRANSITION_DURATION,
+} from './utils/constants';
 import ExportDataButton from './components/ExportDataButton';
 import ImportDataButton from './components/ImportDataButton';
-import { CONTENT, INTERFACE_CONTENT, type Language } from './utils/content';
-import { useEffect } from 'react';
-import { LANGUAGE_KEY } from './utils/constants';
+import { CONTENT, INTERFACE_CONTENT } from './utils/content';
 import type { SnippetDataType } from './types/SnippetDataType';
 
 function App() {
     const versionString = getVersionString();
-    const { items, addItem, removeItem, updateItem, reorderItems, clearItems, language, setLanguage } = useData();
+    const {
+        items,
+        addItem,
+        removeItem,
+        updateItem,
+        reorderItems,
+        clearItems,
+        language,
+        setLanguage,
+    } = useData();
 
-    useEffect(() => {
-        const language = localStorage.getItem(LANGUAGE_KEY);
-        if (language) {
-            setLanguage(language as Language);
-        }
-    }, []);
-
-    const handleSetLanguage = () => {
-        const newLanguage = language === 'en' ? 'de' : 'en';
-        setLanguage(newLanguage);
-        localStorage.setItem(LANGUAGE_KEY, newLanguage);
-    };
+    const handleSetLanguage = () =>
+        setLanguage(language === 'en' ? 'de' : 'en');
 
     return (
         <>
             <div className="cc-app">
                 <InfoModal />
                 <div className="cc-app--userconfig">
-                    <button className="cc-button cc-button--language" onClick={() => handleSetLanguage()}>{CONTENT[language].languageSwitchIcon}</button>
+                    <button
+                        className="cc-button cc-button--language"
+                        aria-label={
+                            language === 'en'
+                                ? 'Sprache auf Deutsch ändern'
+                                : 'Switch language to English'
+                        }
+                        onClick={handleSetLanguage}
+                    >
+                        {CONTENT[language].languageSwitchIcon}
+                    </button>
                     <ThemeToggle />
-                </div>  
+                </div>
                 <header>
                     <div>
                         <h1>{CONTENT[language].title}</h1>
-                        <h3>
-                            {CONTENT[language].description}
-                        </h3>
+                        <h3 aria-level={2}>{CONTENT[language].description}</h3>
                     </div>
                 </header>
                 <main>
+                    <StorageNotice />
                     <div className="cc-app--functional-buttons">
-                        {items.length > 0 && (
-                            <ExportDataButton />
-                        )}
-                        {items.length === 0 && (
-                            <ImportDataButton />
-                        )}
+                        {items.length > 0 && <ExportDataButton />}
+                        {items.length === 0 && <ImportDataButton />}
                         <AnimatePresence>
                             {items.length > 0 && (
                                 <motion.button
                                     initial={{ scale: 0 }}
                                     animate={{ scale: 1 }}
                                     exit={{ scale: 0 }}
-                                    transition={{ duration: MOTION_TRANSITION_DURATION }}
+                                    transition={{
+                                        duration: MOTION_TRANSITION_DURATION,
+                                    }}
                                     className="cc-app--clearAll cc-app--button"
                                     onClick={clearItems}
                                 >
@@ -72,13 +79,13 @@ function App() {
                         </AnimatePresence>
                     </div>
                     <LayoutGroup>
-                        <Reorder.Group 
-                            as="div" 
-                            axis="y" 
-                            values={items as SnippetDataType[]} 
-                            onReorder={reorderItems} 
+                        <Reorder.Group
+                            as="div"
+                            axis="y"
+                            values={items as SnippetDataType[]}
+                            onReorder={reorderItems}
                             className="cc-app--items"
-                        >    
+                        >
                             <AnimatePresence mode="popLayout">
                                 {items.map((item) => (
                                     <CopyClickItem
@@ -86,32 +93,43 @@ function App() {
                                         item={item}
                                         onRemove={removeItem}
                                         onUpdateContents={updateItem}
-                                        initial={{ scaleY: 0, opacity: 0, transformOrigin: 'top' }}
-                                        animate={{ scaleY: 1, opacity: 1, transformOrigin: 'top' }}
-                                        exit={{ scaleY: 0, opacity: 0, transformOrigin: 'top' }}
+                                        initial={{
+                                            scaleY: 0,
+                                            opacity: 0,
+                                            transformOrigin: 'top',
+                                        }}
+                                        animate={{
+                                            scaleY: 1,
+                                            opacity: 1,
+                                            transformOrigin: 'top',
+                                        }}
+                                        exit={{
+                                            scaleY: 0,
+                                            opacity: 0,
+                                            transformOrigin: 'top',
+                                        }}
                                         transition={MOTION_TRANSITION}
                                     />
                                 ))}
                             </AnimatePresence>
                         </Reorder.Group>
-                        <AddItemSkeleton onClick={() => addItem({
-                                id: uuidv4(),
-                                title: `Snippet ${items.length + 1}`,
-                                text: '',
-                                editState: true,
-                            })}
+                        <AddItemSkeleton
+                            onClick={() =>
+                                addItem({
+                                    id: crypto.randomUUID(),
+                                    title: `Snippet ${items.length + 1}`,
+                                    text: '',
+                                    editState: true,
+                                })
+                            }
                         />
                     </LayoutGroup>
                 </main>
                 <footer>
-                <p
-                    className="cc-app--footer cc-app--footer__left"
-                >
-                    (c) Steven Hernandez
-                </p>
-                <p
-                    className="cc-app--footer cc-app--footer__right"
-                >
+                    <p className="cc-app--footer cc-app--footer__left">
+                        (c) Steven Hernandez
+                    </p>
+                    <p className="cc-app--footer cc-app--footer__right">
                         {versionString}
                     </p>
                 </footer>

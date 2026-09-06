@@ -1,18 +1,21 @@
 import type { AddItemSkeletonProps } from '../types/props/AddItemSkeletonProps';
 import { motion } from 'motion/react';
 import { INTERFACE_CONTENT } from '../utils/content';
-import { useData } from '../contexts/UserData';
+import { useData } from '../hooks/useData';
 
 function AddItemSkeleton({ onClick }: AddItemSkeletonProps) {
     const { language } = useData();
     return (
         <>
-            <motion.button className="cc-area cc-area--skeleton" onClick={onClick} layout>
+            <motion.button
+                aria-label={INTERFACE_CONTENT[language].add}
+                className="cc-area cc-area--skeleton"
+                onClick={onClick}
+                layout
+            >
                 <div className="cc-area__title-wrapper">
                     <div className="cc-area__title-skeleton"></div>
-                    <div
-                        className="cc-area__close-button"
-                    >
+                    <div className="cc-area__close-button">
                         <span>{INTERFACE_CONTENT[language].delete}</span>
                     </div>
                 </div>
