@@ -8,6 +8,10 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 export default defineConfig([
     globalIgnores(['dist', 'test-results', 'playwright-report']),
     {
+        files: ['**/*.{js,mjs}'],
+        extends: [js.configs.recommended],
+    },
+    {
         files: ['**/*.{ts,tsx}'],
         extends: [js.configs.recommended, ...tseslint.configs.recommended],
         languageOptions: { globals: globals.browser },
@@ -20,7 +24,7 @@ export default defineConfig([
         ],
     },
     {
-        files: ['*.{js,ts}', 'tests/**/*.{js,ts}'],
+        files: ['*.{js,mjs,ts}', 'tests/**/*.{js,mjs,ts}'],
         languageOptions: { globals: globals.node },
     },
     {

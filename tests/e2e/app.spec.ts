@@ -37,6 +37,7 @@ test('edit, persist, keyboard reorder, clear and remove', async ({ page }) => {
     await page.getByRole('button', { name: 'Add snippet' }).click();
     await page.getByRole('textbox').nth(1).fill('second');
     await page.getByRole('button', { name: 'Snippet 2: Reorder' }).focus();
+    await page.keyboard.press('Enter');
     await page.keyboard.press('ArrowUp');
     await expect(page.getByRole('textbox').first()).toHaveValue('second');
     await page.reload();
@@ -403,6 +404,7 @@ test('drag handle reorders with mouse or touch and persists the order', async ({
         await page.mouse.up();
     }
     await expect(page.locator('.cc-area--dragging')).toHaveCount(0);
+    await expect(handle).toHaveAttribute('aria-pressed', 'false');
     await expect(page.getByRole('textbox').first()).toHaveValue('second');
     await expect(
         page.locator('.cc-area:not(.cc-area--skeleton)').first()
@@ -432,4 +434,46 @@ test('pasting non-text does not delete a selection', async ({ page }) => {
     });
     await expect(page.getByRole('textbox')).toHaveValue(sample.text);
     await expect(page.getByRole('checkbox')).toBeChecked();
+});
+
+test('reorder button supports activation, finishing and focus loss without changing order accidentally', async ({
+    page,
+}) => {
+    await seed(page, [
+        sample,
+        { ...sample, id: 'two', title: 'Snippet 2', text: 'second' },
+    ]);
+    const handle = page.getByRole('button', {
+        name: 'Snippet 2: Reorder snippet',
+    });
+    await handle.focus();
+    await expect(handle).toHaveAttribute('aria-pressed', 'false');
+    await expect(handle).toHaveAttribute('aria-description', /Enter or Space/);
+    await handle.press('ArrowUp');
+    await expect(page.getByRole('textbox').first()).toHaveValue(sample.text);
+    await handle.press('Enter');
+    await expect(handle).toHaveAttribute('aria-pressed', 'true');
+    await handle.press('ArrowUp');
+    await expect(page.getByRole('textbox').first()).toHaveValue('second');
+    await expect(handle).toBeFocused();
+    await handle.press('Space');
+    await expect(handle).toHaveAttribute('aria-pressed', 'false');
+    await handle.press('ArrowDown');
+    await expect(page.getByRole('textbox').first()).toHaveValue('second');
+    await handle.press('Space');
+    await expect(handle).toHaveAttribute('aria-pressed', 'true');
+    await handle.press('ArrowDown');
+    await expect(page.getByRole('textbox').first()).toHaveValue(sample.text);
+    await handle.press('Escape');
+    await expect(handle).toHaveAttribute('aria-pressed', 'false');
+    await handle.press('Enter');
+    await expect(handle).toHaveAttribute('aria-pressed', 'true');
+    await page.getByRole('textbox').first().focus();
+    await expect(handle).toHaveAttribute('aria-pressed', 'false');
+    await handle.click();
+    await expect(handle).toHaveAttribute('aria-pressed', 'true');
+    await handle.click();
+    await expect(handle).toHaveAttribute('aria-pressed', 'false');
+    await page.reload();
+    await expect(page.getByRole('textbox').first()).toHaveValue(sample.text);
 });

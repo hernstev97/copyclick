@@ -10,7 +10,7 @@ A minimalist React application that lets you paste text once and copy it with a 
 
 - Paste into an editable snippet to switch automatically to copy mode. Plain text, including code and HTML, is preserved instead of interpreted as markup.
 - Click a read-only snippet to copy it, or focus it and press Enter / Space. The Edit checkbox switches back to editing.
-- Drag the existing handle with a mouse or touch. Focus the handle and use Arrow Up / Arrow Down to reorder with a keyboard.
+- Drag the existing handle with a mouse or touch. Focus the handle and press Enter / Space to activate keyboard reordering, then use Arrow Up / Arrow Down to move. Enter, Space, Escape or moving focus away finishes reordering.
 - Export a versioned JSON backup. Import is available when the list is empty and accepts both the original array exports and the current envelope. Import validates the entire file before applying it, rejects duplicate IDs, and creates new IDs. Limits: 10 MiB and 1000 snippets per import.
 - Existing language (English/German), theme preference, snippet order, text, and edit state remain supported. An explicit theme takes precedence over the system theme.
 - Invalid saved data is retained, with a recovery download. If storage is blocked/full, edits remain usable in memory and can be exported. Another tab's changed data is detected before overwriting a stale snapshot. The warning offers explicit replacement after confirmation; reload to load another tab's data.

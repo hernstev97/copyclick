@@ -41,7 +41,9 @@ export const INTERFACE_CONTENT = {
         copyLabel: 'Copy snippet',
         copyError:
             'Copy failed. Select the text and copy it manually, or check clipboard permissions.',
-        reorder: 'Reorder snippet (Arrow Up / Arrow Down)',
+        reorder: 'Reorder snippet',
+        reorderHelp:
+            'Press Enter or Space to start reordering, Arrow Up or Arrow Down to move, then Enter, Space or Escape to finish. Moving focus away also finishes reordering.',
         importError:
             'Import failed. Choose valid CopyClick JSON (up to 10 MiB / 1000 snippets). Nothing was imported.',
         recoverData: 'Download stored backup',
@@ -71,7 +73,9 @@ export const INTERFACE_CONTENT = {
         copyLabel: 'Snippet kopieren',
         copyError:
             'Kopieren fehlgeschlagen. Text markieren und manuell kopieren oder die Zwischenablage-Berechtigung prüfen.',
-        reorder: 'Snippet verschieben (Pfeil hoch / Pfeil runter)',
+        reorder: 'Snippet verschieben',
+        reorderHelp:
+            'Mit Enter oder Leertaste das Verschieben starten, mit Pfeil hoch oder runter bewegen und mit Enter, Leertaste oder Escape beenden. Auch ein Fokuswechsel beendet das Verschieben.',
         importError:
             'Import fehlgeschlagen. Gültige CopyClick-JSON wählen (bis 10 MiB / 1000 Snippets). Es wurde nichts importiert.',
         recoverData: 'Gespeicherte Sicherung herunterladen',

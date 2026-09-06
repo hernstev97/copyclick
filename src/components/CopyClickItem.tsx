@@ -42,6 +42,8 @@ const CopyClickItem = React.forwardRef<
         );
         const copyRequest = useRef(0);
         const [dragging, setDragging] = useState(false);
+        const [keyboardReordering, setKeyboardReordering] = useState(false);
+        const pointerDragged = useRef(false);
         const dragControls = useDragControls();
         const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -147,6 +149,8 @@ const CopyClickItem = React.forwardRef<
                 dragListener={false}
                 dragControls={dragControls}
                 onDragStart={() => {
+                    pointerDragged.current = true;
+                    setKeyboardReordering(false);
                     setDragging(true);
                 }}
                 onDragEnd={() => {
@@ -230,11 +234,41 @@ const CopyClickItem = React.forwardRef<
                             role="button"
                             tabIndex={0}
                             aria-label={`${title}: ${content.reorder}`}
+                            aria-description={content.reorderHelp}
+                            aria-pressed={keyboardReordering}
+                            onClick={(event) => {
+                                // Firefox can emit a click after dropping; it must not pick up again.
+                                if (
+                                    event.detail === 0 ||
+                                    !pointerDragged.current
+                                ) {
+                                    setKeyboardReordering((active) => !active);
+                                }
+                                pointerDragged.current = false;
+                            }}
+                            onBlur={() => setKeyboardReordering(false)}
                             style={{ touchAction: 'none' }}
                             onKeyDown={(event) => {
                                 if (
-                                    event.key === 'ArrowUp' ||
-                                    event.key === 'ArrowDown'
+                                    event.key === 'Enter' ||
+                                    event.key === ' '
+                                ) {
+                                    event.preventDefault();
+                                    if (!event.repeat)
+                                        setKeyboardReordering(
+                                            (active) => !active
+                                        );
+                                    return;
+                                }
+                                if (event.key === 'Escape') {
+                                    event.preventDefault();
+                                    setKeyboardReordering(false);
+                                    return;
+                                }
+                                if (
+                                    keyboardReordering &&
+                                    (event.key === 'ArrowUp' ||
+                                        event.key === 'ArrowDown')
                                 ) {
                                     event.preventDefault();
                                     moveItem(
@@ -244,6 +278,7 @@ const CopyClickItem = React.forwardRef<
                                 }
                             }}
                             onPointerDown={(e) => {
+                                pointerDragged.current = false;
                                 dragControls.start(e);
                             }}
                         >
